@@ -177,8 +177,8 @@ export function SiteHeader() {
             to="/kontakt"
             className="bg-gradient-brand shadow-brand inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
           >
-            <Phone className="h-4 w-4" />
             {t.contact}
+
           </Link>
           <LanguageSwitcher id="desktop" variant={scrolled ? "dark" : "light"} />
         </nav>
