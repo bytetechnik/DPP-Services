@@ -8,7 +8,7 @@ const nav = [
   { label: "Ablauf", href: "/#ablauf" },
   { label: "Einblicke", href: "/#einblicke" },
   { label: "FAQ", href: "/#faq" },
-  { label: "Kontakt", href: "/#kontakt" },
+  { label: "Kontakt", href: "/kontakt" },
 ];
 
 const leistungen = [
@@ -103,12 +103,12 @@ export function SiteFooter() {
                 Einsätze 24/7
               </li>
             </ul>
-            <a
-              href="/#kontakt"
+            <Link
+              to="/kontakt"
               className="bg-gradient-brand shadow-brand mt-6 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
             >
               Anfrage senden
-            </a>
+            </Link>
           </div>
         </div>
 

@@ -6,7 +6,7 @@ import { About } from "@/components/site/about";
 import { Process } from "@/components/site/process";
 import { Insights } from "@/components/site/insights";
 import { Faq } from "@/components/site/faq";
-import { Contact } from "@/components/site/contact";
+
 import { SiteFooter } from "@/components/site/footer";
 
 const title = "DPP Services | Empfangsdienst & Hotelpersonal Rhein-Main";
@@ -36,7 +36,7 @@ function Index() {
         <Process />
         <Insights />
         <Faq />
-        <Contact />
+        
       </main>
       <SiteFooter />
     </div>
