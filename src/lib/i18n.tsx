@@ -17,15 +17,12 @@ function normalize(value: string | undefined | null): Lang | undefined {
 export const resolveInitialLang = createIsomorphicFn()
   .server((): Lang => {
     try {
-      // Lazily required so this never enters the client bundle.
-      const { getCookie } = require("@tanstack/react-start/server") as {
-        getCookie: (name: string) => string | undefined;
-      };
-      return normalize(getCookie(LANG_STORAGE_KEY)) ?? "de";
+      return normalize(readLangCookie()) ?? "de";
     } catch {
       return "de";
     }
   })
+
   .client((): Lang => {
     const fromCookie = document.cookie
       .split("; ")
