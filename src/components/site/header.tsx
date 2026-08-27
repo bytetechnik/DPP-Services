@@ -37,6 +37,36 @@ export function SiteHeader() {
   const links = hrefs.map((href, i) => ({ href, label: t.nav[i] }));
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const hash = useRouterState({ select: (s) => s.location.hash });
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/" && !hash;
+    if (href.startsWith("/#")) return pathname === "/" && hash === href.slice(2);
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
+  const scrollToTop = () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const onHomeClick = (e: React.MouseEvent) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    setOpen(false);
+    if (pathname === "/") {
+      if (hash) void navigate({ to: "/", hash: "", replace: true });
+      scrollToTop();
+    } else {
+      void navigate({ to: "/" }).then(() => {
+        requestAnimationFrame(scrollToTop);
+      });
+    }
+  };
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
