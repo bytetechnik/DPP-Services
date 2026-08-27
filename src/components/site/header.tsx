@@ -223,12 +223,14 @@ export function SiteHeader() {
               <div className="relative flex flex-col p-5 pb-6">
                 {links.map((l, i) => {
                   const active = isActive(l.href);
+                  const isHash = l.href.startsWith("/#");
                   return (
-                    <motion.a
+                    <MotionLink
                       key={l.href}
-                      href={l.href}
+                      to="/"
+                      {...(isHash ? { hash: l.href.slice(2) } : { to: l.href })}
                       aria-current={active ? "page" : undefined}
-                      onClick={(e) => {
+                      onClick={(e: React.MouseEvent) => {
                         if (l.href === "/") onHomeClick(e);
                         setOpen(false);
                       }}
@@ -240,6 +242,7 @@ export function SiteHeader() {
                         active && "-mx-2 rounded-2xl border-0 bg-primary/8 px-2",
                       )}
                     >
+
                       <span className="flex min-w-0 items-center gap-3">
                         {active ? (
                           <span className="bg-gradient-brand h-5 w-1 shrink-0 rounded-full" />
