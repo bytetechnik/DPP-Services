@@ -12,7 +12,11 @@ export const Route = createFileRoute("/impressum")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { property: "og:url", content: "https://dpp-modern-revival.lovable.app/impressum" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://dpp-modern-revival.lovable.app/impressum" }],
   }),
   component: ImpressumPage,
 });

@@ -18,7 +18,9 @@ export const Route = createFileRoute("/leistungen")({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:url", content: "https://dpp-modern-revival.lovable.app/leistungen" },
     ],
+    links: [{ rel: "canonical", href: "https://dpp-modern-revival.lovable.app/leistungen" }],
   }),
   component: LeistungenPage,
 });
