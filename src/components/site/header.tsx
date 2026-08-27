@@ -19,7 +19,7 @@ const copy = {
     callAria: "DPP Services anrufen",
     nav: ["Startseite", "Leistungen", "Über uns", "FAQ"],
     contact: "Kontakt",
-    contactLong: "Jetzt Kontakt aufnehmen",
+    contactLong: "Kontakt",
     menuOpen: "Menü öffnen",
     menuClose: "Menü schließen",
   },
@@ -29,7 +29,7 @@ const copy = {
     callAria: "Call DPP Services",
     nav: ["Home", "Services", "About us", "FAQ"],
     contact: "Contact",
-    contactLong: "Get in touch now",
+    contactLong: "Contact us",
     menuOpen: "Open menu",
     menuClose: "Close menu",
   },
@@ -177,8 +177,8 @@ export function SiteHeader() {
             to="/kontakt"
             className="bg-gradient-brand shadow-brand inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
           >
-            <Phone className="h-4 w-4" />
             {t.contact}
+
           </Link>
           <LanguageSwitcher id="desktop" variant={scrolled ? "dark" : "light"} />
         </nav>
@@ -285,16 +285,17 @@ export function SiteHeader() {
                     onClick={() => setOpen(false)}
                     className="bg-gradient-brand shadow-brand flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-bold text-primary-foreground"
                   >
-                    <Phone className="h-4 w-4" />
                     {t.contactLong}
                   </Link>
                   <a
                     href="tel:+4917670800798"
                     aria-label={t.callAria}
-                    className="mt-3 block text-center text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase"
+                    className="mt-3 flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase"
                   >
+                    <Phone className="h-3.5 w-3.5" />
                     +49 176 70800798
                   </a>
+
                 </motion.div>
               </div>
             </motion.div>
