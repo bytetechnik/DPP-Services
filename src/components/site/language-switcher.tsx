@@ -11,9 +11,11 @@ const options: { value: Lang; label: string; aria: string }[] = [
 export function LanguageSwitcher({
   variant = "light",
   className,
+  id = "default",
 }: {
   variant?: "light" | "dark";
   className?: string;
+  id?: string;
 }) {
   const { lang, setLang } = useLang();
 
@@ -55,7 +57,7 @@ export function LanguageSwitcher({
           >
             {active && (
               <motion.span
-                layoutId={`lang-pill-${variant}`}
+                layoutId={`lang-pill-${id}`}
                 className="bg-gradient-brand absolute inset-0 rounded-full"
                 transition={{ type: "spring", stiffness: 400, damping: 32 }}
               />

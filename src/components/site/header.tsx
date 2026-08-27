@@ -114,11 +114,11 @@ export function SiteHeader() {
             <Phone className="h-4 w-4" />
             {t.contact}
           </Link>
-          <LanguageSwitcher variant={scrolled ? "dark" : "light"} />
+          <LanguageSwitcher id="desktop" variant={scrolled ? "dark" : "light"} />
         </nav>
 
         <div className="ml-auto flex items-center gap-2 lg:hidden">
-          <LanguageSwitcher variant={scrolled ? "dark" : "light"} />
+          <LanguageSwitcher id="mobile" variant={scrolled ? "dark" : "light"} />
         </div>
 
         <button
