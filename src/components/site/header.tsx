@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, Phone } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import logo from "@/assets/dpp-logo.asset.json";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "Leistungen", href: "#leistungen" },
-  { label: "Über uns", href: "#ueber-uns" },
-  { label: "Ablauf", href: "#ablauf" },
-  { label: "Einblicke", href: "#einblicke" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Leistungen", href: "/#leistungen" },
+  { label: "Über uns", href: "/#ueber-uns" },
+  { label: "Ablauf", href: "/#ablauf" },
+  { label: "Einblicke", href: "/#einblicke" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 export function SiteHeader() {
