@@ -23,6 +23,29 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://dpp-modern-revival.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "DPP Services GbR",
+          description,
+          url: "https://dpp-modern-revival.lovable.app/",
+          telephone: "+4917670800798",
+          email: "info@dpp-services.de",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Am Kronberger Hang 2",
+            postalCode: "65824",
+            addressLocality: "Schwalbach am Taunus",
+            addressCountry: "DE",
+          },
+          areaServed: "Rhein-Main-Gebiet",
+          vatID: "DE460265715",
+        }),
+      },
+    ],
   }),
   component: Index,
 });
