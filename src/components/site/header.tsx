@@ -214,27 +214,52 @@ export function SiteHeader() {
               <div className="bg-gradient-brand h-1 w-full" />
               <div className="glow-orb -top-16 -right-10 h-40 w-40" />
               <div className="relative flex flex-col p-5 pb-6">
-                {links.map((l, i) => (
-                  <motion.a
-                    key={l.href}
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.08 + i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="group flex items-center justify-between gap-4 border-b border-border/60 py-4 last:border-0"
-                  >
-                    <span className="flex min-w-0 items-center gap-3">
-                      <span className="text-[10px] font-bold tabular-nums text-primary/70">
-                        0{i + 1}
+                {links.map((l, i) => {
+                  const active = isActive(l.href);
+                  return (
+                    <motion.a
+                      key={l.href}
+                      href={l.href}
+                      aria-current={active ? "page" : undefined}
+                      onClick={(e) => {
+                        if (l.href === "/") onHomeClick(e);
+                        setOpen(false);
+                      }}
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.08 + i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className={cn(
+                        "group flex items-center justify-between gap-4 border-b border-border/60 py-4 last:border-0",
+                        active && "-mx-2 rounded-2xl border-0 bg-primary/8 px-2",
+                      )}
+                    >
+                      <span className="flex min-w-0 items-center gap-3">
+                        {active ? (
+                          <span className="bg-gradient-brand h-5 w-1 shrink-0 rounded-full" />
+                        ) : (
+                          <span className="text-[10px] font-bold tabular-nums text-primary/70">
+                            0{i + 1}
+                          </span>
+                        )}
+                        <span
+                          className={cn(
+                            "truncate font-display text-xl font-extrabold tracking-tight",
+                            active ? "text-primary" : "text-ink",
+                          )}
+                        >
+                          {l.label}
+                        </span>
                       </span>
-                      <span className="truncate font-display text-xl font-extrabold tracking-tight text-ink">
-                        {l.label}
-                      </span>
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
-                  </motion.a>
-                ))}
+                      <ArrowUpRight
+                        className={cn(
+                          "h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary",
+                          active ? "text-primary" : "text-muted-foreground",
+                        )}
+                      />
+                    </motion.a>
+                  );
+                })}
+
                 <motion.div
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
