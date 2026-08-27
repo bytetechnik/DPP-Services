@@ -1,4 +1,5 @@
 import { ArrowUpRight, BedDouble, Building2, ConciergeBell, Moon, Users } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Reveal, RevealGroup, RevealItem } from "./reveal";
 import { useCopy } from "@/lib/i18n";
 import empfang from "@/assets/service-empfang.jpg";
@@ -125,13 +126,13 @@ export function Services() {
                       </li>
                     ))}
                   </ul>
-                  <a
-                    href="/kontakt"
+                  <Link
+                    to="/kontakt"
                     className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary-deep"
                   >
                     {t.cta}
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </a>
+                  </Link>
                 </div>
               </article>
             </RevealItem>
@@ -148,12 +149,12 @@ export function Services() {
                 {t.bannerHeading}
               </h3>
             </div>
-            <a
-              href="/kontakt"
+            <Link
+              to="/kontakt"
               className="bg-gradient-brand inline-flex shrink-0 items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-primary-foreground"
             >
               {t.bannerCta}
-            </a>
+            </Link>
           </div>
         </Reveal>
       </div>

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { SiteFooter } from "./footer";
 import { useCopy } from "@/lib/i18n";

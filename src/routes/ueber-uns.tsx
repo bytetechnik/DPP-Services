@@ -1,74 +1,55 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Quote } from "lucide-react";
+import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/site/header";
 import { About } from "@/components/site/about";
 import { SiteFooter } from "@/components/site/footer";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/reveal";
 import { useCopy } from "@/lib/i18n";
+import { PageMeta } from "@/lib/page-meta";
 import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
 
 const title = "Über uns | DPP Services – Empfang & Hotelservices";
 const description =
   "Wer wir sind: DPP Services steht für Gastfreundschaft, Diskretion und Verlässlichkeit am Empfang – mit geschultem Personal für Hotels und Unternehmen im Rhein-Main-Gebiet.";
 
-export const Route = createFileRoute("/ueber-uns")({
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: `${SITE_ORIGIN}/ueber-uns` },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_ORIGIN}/ueber-uns` }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@graph": [
-          {
-            "@type": "LocalBusiness",
-            "@id": `${SITE_ORIGIN}/#business`,
-            name: "DPP Services GbR",
-            url: `${SITE_ORIGIN}/`,
-            logo: SITE_LOGO,
-            image: SITE_LOGO,
-            telephone: "+4917670800798",
-            email: "info@dpp-services.de",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "Am Kronberger Hang 2",
-              postalCode: "65824",
-              addressLocality: "Schwalbach am Taunus",
-              addressCountry: "DE",
-            },
-            areaServed: "Rhein-Main-Gebiet",
-            vatID: "DE460265715",
-          },
-          {
-            "@type": "AboutPage",
-            name: title,
-            description,
-            url: `${SITE_ORIGIN}/ueber-uns`,
-            mainEntity: { "@id": `${SITE_ORIGIN}/#business` },
-          },
-          {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Startseite", item: `${SITE_ORIGIN}/` },
-              { "@type": "ListItem", position: 2, name: "Über uns", item: `${SITE_ORIGIN}/ueber-uns` },
-            ],
-          },
-          ],
-        }),
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": `${SITE_ORIGIN}/#business`,
+      name: "DPP Services GbR",
+      url: `${SITE_ORIGIN}/`,
+      logo: SITE_LOGO,
+      image: SITE_LOGO,
+      telephone: "+4917670800798",
+      email: "info@dpp-services.de",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Am Kronberger Hang 2",
+        postalCode: "65824",
+        addressLocality: "Schwalbach am Taunus",
+        addressCountry: "DE",
       },
-    ],
-  }),
-  component: UeberUnsPage,
-});
+      areaServed: "Rhein-Main-Gebiet",
+      vatID: "DE460265715",
+    },
+    {
+      "@type": "AboutPage",
+      name: title,
+      description,
+      url: `${SITE_ORIGIN}/ueber-uns`,
+      mainEntity: { "@id": `${SITE_ORIGIN}/#business` },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Startseite", item: `${SITE_ORIGIN}/` },
+        { "@type": "ListItem", position: 2, name: "Über uns", item: `${SITE_ORIGIN}/ueber-uns` },
+      ],
+    },
+  ],
+};
 
 const copy = {
   de: {
@@ -155,10 +136,11 @@ const copy = {
   },
 };
 
-function UeberUnsPage() {
+export function UeberUnsPage() {
   const t = useCopy(copy);
   return (
     <div id="top" className="min-h-screen bg-background">
+      <PageMeta title={title} description={description} path="/ueber-uns" jsonLd={jsonLd} />
       <SiteHeader />
       <main>
         <section className="relative overflow-hidden bg-ink pt-28 pb-16 sm:pt-36 sm:pb-24">

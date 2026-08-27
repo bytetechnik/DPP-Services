@@ -1,27 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { LegalLayout, LegalSection } from "@/components/site/legal-layout";
 import { useCopy } from "@/lib/i18n";
-import { SITE_ORIGIN } from "@/lib/site";
+import { PageMeta } from "@/lib/page-meta";
 
 const title = "Datenschutzerklärung | DPP Services";
 const description =
   "Datenschutzerklärung der DPP Services GbR: Informationen zur Verarbeitung personenbezogener Daten, Kontaktformular, Hosting und Ihre Rechte nach DSGVO.";
-
-export const Route = createFileRoute("/datenschutz")({
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:url", content: `${SITE_ORIGIN}/datenschutz` },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_ORIGIN}/datenschutz` }],
-  }),
-  component: DatenschutzPage,
-});
 
 const copy = {
   de: {
@@ -138,10 +121,11 @@ const copy = {
   },
 } as const;
 
-function DatenschutzPage() {
+export function DatenschutzPage() {
   const t = useCopy(copy);
   return (
     <LegalLayout title={t.title} intro={t.intro}>
+      <PageMeta title={title} description={description} path="/datenschutz" />
       <LegalSection heading={t.s1Heading}>
         <p>{t.s1P1}</p>
         <p>

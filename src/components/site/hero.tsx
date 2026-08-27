@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { ArrowRight, Clock, ShieldCheck, Sparkles, Star, type LucideIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-reception.jpg";
 import { useCopy } from "@/lib/i18n";
 
@@ -84,19 +85,19 @@ export function Hero() {
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <a
-              href="/kontakt"
+            <Link
+              to="/kontakt"
               className="bg-gradient-brand shadow-brand group inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
             >
               {t.ctaPrimary}
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
-            <a
-              href="/leistungen"
+            </Link>
+            <Link
+              to="/leistungen"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/5 px-7 py-4 text-sm font-bold text-white backdrop-blur transition-colors duration-300 hover:bg-white/15"
             >
               {t.ctaSecondary}
-            </a>
+            </Link>
           </div>
 
           <div className="mt-12 flex flex-wrap gap-x-7 gap-y-3">

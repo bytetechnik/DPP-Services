@@ -1,27 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { LegalLayout, LegalSection } from "@/components/site/legal-layout";
 import { useCopy } from "@/lib/i18n";
-import { SITE_ORIGIN } from "@/lib/site";
+import { PageMeta } from "@/lib/page-meta";
 
 const title = "Impressum | DPP Services GbR";
 const description =
   "Impressum der DPP Services GbR, Am Kronberger Hang 2, 65824 Schwalbach am Taunus – Angaben gemäß § 5 TMG, Kontakt und Haftungshinweise.";
-
-export const Route = createFileRoute("/impressum")({
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:url", content: `${SITE_ORIGIN}/impressum` },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_ORIGIN}/impressum` }],
-  }),
-  component: ImpressumPage,
-});
 
 const copy = {
   de: {
@@ -70,10 +53,11 @@ const copy = {
   },
 } as const;
 
-function ImpressumPage() {
+export function ImpressumPage() {
   const t = useCopy(copy);
   return (
     <LegalLayout title={t.title} intro={t.intro}>
+      <PageMeta title={title} description={description} path="/impressum" />
       <LegalSection heading={t.anbieter}>
         <p>
           DPP Services GbR

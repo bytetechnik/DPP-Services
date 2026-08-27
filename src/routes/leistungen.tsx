@@ -1,75 +1,56 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarClock, CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/site/header";
 import { Services } from "@/components/site/services";
 import { SiteFooter } from "@/components/site/footer";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/reveal";
 import { useCopy } from "@/lib/i18n";
+import { PageMeta } from "@/lib/page-meta";
 import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
 
 const title = "Leistungen | Empfangsdienst, Night Audit & Hotelservice";
 const description =
   "Alle Leistungen von DPP Services im Detail: Empfangsdienst und Hotelrezeption, Night Audit, Tagungs- und Bankettservice sowie Büro-Empfang im Rhein-Main-Gebiet.";
 
-export const Route = createFileRoute("/leistungen")({
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: `${SITE_ORIGIN}/leistungen` },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_ORIGIN}/leistungen` }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@graph": [
-          {
-            "@type": "LocalBusiness",
-            "@id": `${SITE_ORIGIN}/#business`,
-            name: "DPP Services GbR",
-            url: `${SITE_ORIGIN}/`,
-            logo: SITE_LOGO,
-            image: SITE_LOGO,
-            telephone: "+4917670800798",
-            email: "info@dpp-services.de",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "Am Kronberger Hang 2",
-              postalCode: "65824",
-              addressLocality: "Schwalbach am Taunus",
-              addressCountry: "DE",
-            },
-            areaServed: "Rhein-Main-Gebiet",
-            vatID: "DE460265715",
-          },
-          {
-            "@type": "Service",
-            name: "Empfangs- und Hotelservices",
-            description,
-            serviceType: "Empfangsdienst, Hotelrezeption, Night Audit, Tagungsservice, Büro-Empfang",
-            provider: { "@id": `${SITE_ORIGIN}/#business` },
-            areaServed: "Rhein-Main-Gebiet",
-          },
-          {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Startseite", item: `${SITE_ORIGIN}/` },
-              { "@type": "ListItem", position: 2, name: "Leistungen", item: `${SITE_ORIGIN}/leistungen` },
-            ],
-          },
-          ],
-        }),
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": `${SITE_ORIGIN}/#business`,
+      name: "DPP Services GbR",
+      url: `${SITE_ORIGIN}/`,
+      logo: SITE_LOGO,
+      image: SITE_LOGO,
+      telephone: "+4917670800798",
+      email: "info@dpp-services.de",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Am Kronberger Hang 2",
+        postalCode: "65824",
+        addressLocality: "Schwalbach am Taunus",
+        addressCountry: "DE",
       },
-    ],
-  }),
-  component: LeistungenPage,
-});
+      areaServed: "Rhein-Main-Gebiet",
+      vatID: "DE460265715",
+    },
+    {
+      "@type": "Service",
+      name: "Empfangs- und Hotelservices",
+      description,
+      serviceType: "Empfangsdienst, Hotelrezeption, Night Audit, Tagungsservice, Büro-Empfang",
+      provider: { "@id": `${SITE_ORIGIN}/#business` },
+      areaServed: "Rhein-Main-Gebiet",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Startseite", item: `${SITE_ORIGIN}/` },
+        { "@type": "ListItem", position: 2, name: "Leistungen", item: `${SITE_ORIGIN}/leistungen` },
+      ],
+    },
+  ],
+};
 
 const copy = {
   de: {
@@ -150,10 +131,11 @@ const copy = {
   },
 };
 
-function LeistungenPage() {
+export function LeistungenPage() {
   const t = useCopy(copy);
   return (
     <div id="top" className="min-h-screen bg-background">
+      <PageMeta title={title} description={description} path="/leistungen" jsonLd={jsonLd} />
       <SiteHeader />
       <main>
         <section className="relative overflow-hidden bg-ink pt-28 pb-16 sm:pt-36 sm:pb-24">

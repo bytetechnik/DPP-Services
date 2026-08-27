@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, Phone, ArrowUpRight } from "lucide-react";
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/i18n";
 import { LanguageSwitcher } from "./language-switcher";
@@ -41,15 +41,15 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const hash = useRouterState({ select: (s) => s.location.hash });
+  const { pathname, hash } = useLocation();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const activeHash = mounted ? hash : "";
 
   const isActive = (href: string) => {
-    if (href === "/") return pathname === "/" && !activeHash;
-    if (href.startsWith("/#")) return pathname === "/" && activeHash === href.slice(2);
+    const currentHash = activeHash.replace(/^#/, "");
+    if (href === "/") return pathname === "/" && !currentHash;
+    if (href.startsWith("/#")) return pathname === "/" && currentHash === href.slice(2);
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
@@ -65,12 +65,10 @@ export function SiteHeader() {
     e.preventDefault();
     setOpen(false);
     if (pathname === "/") {
-      if (hash) void navigate({ to: "/", hash: "", replace: true });
+      if (hash) void navigate({ pathname: "/", hash: "" }, { replace: true });
       scrollToTop();
     } else {
-      void navigate({ to: "/" }).then(() => {
-        requestAnimationFrame(scrollToTop);
-      });
+      void navigate("/");
     }
   };
 
@@ -141,8 +139,7 @@ export function SiteHeader() {
             return (
               <Link
                 key={l.href}
-                to="/"
-                {...(isHash ? { hash: l.href.slice(2) } : { to: l.href })}
+                to={isHash ? { pathname: "/", hash: l.href.slice(2) } : l.href}
                 onClick={l.href === "/" ? onHomeClick : undefined}
                 aria-current={active ? "page" : undefined}
                 className={cn(
@@ -230,8 +227,7 @@ export function SiteHeader() {
                   return (
                     <MotionLink
                       key={l.href}
-                      to="/"
-                      {...(isHash ? { hash: l.href.slice(2) } : { to: l.href })}
+                      to={isHash ? { pathname: "/", hash: l.href.slice(2) } : l.href}
                       aria-current={active ? "page" : undefined}
                       onClick={(e: React.MouseEvent) => {
                         if (l.href === "/") onHomeClick(e);

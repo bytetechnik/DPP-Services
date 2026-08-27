@@ -1,31 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
-import { createIsomorphicFn } from "@tanstack/react-start";
 
 import { LANG_STORAGE_KEY, normalizeLang as normalize, type Lang } from "./lang-shared";
-import { readLangCookie } from "./lang.server";
 
 export type { Lang };
 export { LANG_STORAGE_KEY };
-
-
-/**
- * Resolves the visitor's language on both server (cookie header) and client
- * (cookie / localStorage) so SSR already renders the right language and there
- * is no German flash on full page loads.
- */
-export const resolveInitialLang = createIsomorphicFn()
-  .server((): Lang => {
-    try {
-      return normalize(readLangCookie()) ?? "de";
-    } catch {
-      return "de";
-    }
-  })
-
-  // On the client the first render must match the server-rendered HTML, so we
-  // read what the server already put on <html lang>. The real preference is
-  // applied right after mount (see LanguageProvider).
-  .client((): Lang => normalize(document.documentElement.lang) ?? "de");
 
 /** Client-only: the visitor's stored preference (cookie first, then localStorage). */
 export function readPreferredLang(): Lang | null {
@@ -43,6 +21,10 @@ export function readPreferredLang(): Lang | null {
   return normalize(fromCookie) ?? normalize(stored) ?? null;
 }
 
+export function resolveInitialLang(): Lang {
+  if (typeof document === "undefined") return "de";
+  return readPreferredLang() ?? normalize(document.documentElement.lang) ?? "de";
+}
 
 type I18nContextValue = {
   lang: Lang;
@@ -60,7 +42,6 @@ export function LanguageProvider({
 }) {
   const [lang, setLangState] = useState<Lang>(initialLang);
 
-  // After hydration, honour the stored preference if the server guessed differently.
   useEffect(() => {
     const preferred = readPreferredLang();
     if (preferred && preferred !== lang) setLangState(preferred);
@@ -70,7 +51,6 @@ export function LanguageProvider({
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
-
 
   const setLang = useCallback((next: Lang) => {
     setLangState(next);
@@ -85,7 +65,6 @@ export function LanguageProvider({
   return <I18nContext.Provider value={{ lang, setLang }}>{children}</I18nContext.Provider>;
 }
 
-
 export function useLang() {
   return useContext(I18nContext);
 }
@@ -96,16 +75,16 @@ type Loose<T> = T extends (...args: never[]) => unknown
   : T extends { $$typeof: symbol }
     ? T
     : T extends string
-  ? string
-  : T extends number
-    ? number
-    : T extends boolean
-      ? boolean
-      : T extends readonly (infer U)[]
-        ? Loose<U>[]
-        : T extends object
-          ? { [K in keyof T]: Loose<T[K]> }
-          : T;
+      ? string
+      : T extends number
+        ? number
+        : T extends boolean
+          ? boolean
+          : T extends readonly (infer U)[]
+            ? Loose<U>[]
+            : T extends object
+              ? { [K in keyof T]: Loose<T[K]> }
+              : T;
 
 /** Pick the copy for the active language from a `{ de, en }` dictionary. */
 export function useCopy<T extends Record<Lang, unknown>>(copy: T): Loose<T["de"]> {

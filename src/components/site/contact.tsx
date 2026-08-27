@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { Mail, MapPin, Phone, Send, Clock3 } from "lucide-react";
-import { toast } from "sonner";
 import { Reveal } from "./reveal";
 
 import { useCopy } from "@/lib/i18n";
@@ -41,8 +40,6 @@ const copy = {
     sending: "Wird gesendet …",
     submit: "Einreichen",
     disclaimer: "Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage genutzt.",
-    toastTitle: "Danke für Ihre Anfrage!",
-    toastDescription: "Wir melden uns innerhalb eines Werktages bei Ihnen.",
   },
   en: {
     eyebrow: "Contact",
@@ -76,13 +73,12 @@ const copy = {
     sending: "Sending …",
     submit: "Submit",
     disclaimer: "Your information will only be used to process your inquiry.",
-    toastTitle: "Thank you for your inquiry!",
-    toastDescription: "We will get back to you within one business day.",
   },
 };
 
 export function Contact() {
   const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
   const t = useCopy(copy);
   const contactItems = t.contactItems.map((c, i) => ({ ...c, icon: contactIcons[i]! }));
 
@@ -156,17 +152,18 @@ export function Contact() {
 
 
         <Reveal delay={0.1}>
+          {sent ? (
+            <div className="grid min-h-[320px] place-items-center rounded-3xl border border-white/12 bg-white/5 p-6 backdrop-blur-xl sm:p-8">
+              <p className="font-display text-2xl font-extrabold text-white">Form send</p>
+            </div>
+          ) : (
           <form
             onSubmit={(e) => {
               e.preventDefault();
               setSending(true);
-              const form = e.currentTarget;
               window.setTimeout(() => {
                 setSending(false);
-                form.reset();
-                toast.success(t.toastTitle, {
-                  description: t.toastDescription,
-                });
+                setSent(true);
               }, 700);
             }}
             className="rounded-3xl border border-white/12 bg-white/5 p-6 backdrop-blur-xl sm:p-8"
@@ -234,6 +231,7 @@ export function Contact() {
               {t.disclaimer}
             </p>
           </form>
+          )}
         </Reveal>
       </div>
     </section>

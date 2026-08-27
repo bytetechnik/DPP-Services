@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Link } from "react-router-dom";
 import { Reveal } from "./reveal";
 import { useCopy } from "@/lib/i18n";
 
@@ -87,12 +88,12 @@ export function Faq() {
             {t.title}
           </h2>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">{t.paragraph}</p>
-          <a
-            href="/kontakt"
+          <Link
+            to="/kontakt"
             className="bg-gradient-brand shadow-brand mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
           >
             {t.cta}
-          </a>
+          </Link>
         </Reveal>
 
         <Reveal delay={0.1}>

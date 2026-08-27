@@ -1,4 +1,5 @@
 import { ArrowUpRight, Quote } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Reveal, RevealGroup, RevealItem } from "./reveal";
 import { useCopy } from "@/lib/i18n";
 
@@ -156,13 +157,13 @@ export function Insights() {
                   {p.title}
                 </h3>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
-                <a
-                  href="/kontakt"
+                <Link
+                  to="/kontakt"
                   className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary-deep"
                 >
                   {t.readMore}
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
+                </Link>
               </article>
             </RevealItem>
           ))}

@@ -1,5 +1,5 @@
 import { Mail, MapPin, Clock3, ArrowUp, Phone } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useCopy } from "@/lib/i18n";
 
 
@@ -112,8 +112,7 @@ export function SiteFooter() {
                 return (
                   <li key={n.href}>
                     <Link
-                      to="/"
-                      {...(isHash ? { hash: n.href.slice(2) } : { to: n.href })}
+                      to={isHash ? { pathname: "/", hash: n.href.slice(2) } : n.href}
                       className="text-sm text-white/70 transition-colors hover:text-white"
                     >
                       {n.label}
