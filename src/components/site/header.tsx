@@ -98,7 +98,7 @@ export function SiteHeader() {
         )}
       />
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-4 px-4 sm:h-20 sm:px-6 lg:px-8">
-        <Link to="/" className="flex min-w-0 items-center gap-3">
+        <Link to="/" onClick={onHomeClick} className="flex min-w-0 items-center gap-3">
           <img
             src={logo.url}
             alt={t.logoAlt}
