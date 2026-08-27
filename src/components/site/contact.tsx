@@ -3,16 +3,9 @@ import { Mail, MapPin, Phone, Send, Clock3 } from "lucide-react";
 import { toast } from "sonner";
 import { Reveal } from "./reveal";
 
-const services = [
-  "Empfangsdienst / Hotelrezeption",
-  "Night Audit",
-  "Hotelservice / Tagung / Servicekräfte",
-  "Büro-Empfang",
-  "Sonstiges",
-];
-
 export function Contact() {
   const [sending, setSending] = useState(false);
+
 
   return (
     <section id="kontakt" className="relative overflow-hidden bg-ink py-20 sm:py-28">
