@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, Phone, ArrowUpRight } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import logo from "@/assets/dpp-logo.asset.json";
 import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/i18n";
 import { LanguageSwitcher } from "./language-switcher";
+
 
 const hrefs = ["/", "/leistungen", "/ueber-uns", "/#faq"];
 
@@ -36,6 +37,36 @@ export function SiteHeader() {
   const links = hrefs.map((href, i) => ({ href, label: t.nav[i] }));
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const hash = useRouterState({ select: (s) => s.location.hash });
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/" && !hash;
+    if (href.startsWith("/#")) return pathname === "/" && hash === href.slice(2);
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
+  const scrollToTop = () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const onHomeClick = (e: React.MouseEvent) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    setOpen(false);
+    if (pathname === "/") {
+      if (hash) void navigate({ to: "/", hash: "", replace: true });
+      scrollToTop();
+    } else {
+      void navigate({ to: "/" }).then(() => {
+        requestAnimationFrame(scrollToTop);
+      });
+    }
+  };
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -67,7 +98,7 @@ export function SiteHeader() {
         )}
       />
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-4 px-4 sm:h-20 sm:px-6 lg:px-8">
-        <Link to="/" className="flex min-w-0 items-center gap-3">
+        <Link to="/" onClick={onHomeClick} className="flex min-w-0 items-center gap-3">
           <img
             src={logo.url}
             alt={t.logoAlt}
@@ -97,18 +128,40 @@ export function SiteHeader() {
         </Link>
 
         <nav className="ml-auto hidden items-center gap-8 lg:flex">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className={cn(
-                "underline-sweep text-sm font-semibold transition-colors",
-                scrolled ? "text-ink-soft hover:text-ink" : "text-white/85 hover:text-white",
-              )}
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) => {
+            const active = isActive(l.href);
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={l.href === "/" ? onHomeClick : undefined}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "underline-sweep relative text-sm font-semibold transition-colors",
+                  active
+                    ? scrolled
+                      ? "text-primary"
+                      : "text-white"
+                    : scrolled
+                      ? "text-ink-soft hover:text-ink"
+                      : "text-white/85 hover:text-white",
+                )}
+              >
+                {l.label}
+                {active && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className={cn(
+                      "absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full",
+                      scrolled ? "bg-gradient-brand" : "bg-white",
+                    )}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  />
+                )}
+              </a>
+            );
+          })}
+
           <Link
             to="/kontakt"
             className="bg-gradient-brand shadow-brand inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
@@ -161,27 +214,52 @@ export function SiteHeader() {
               <div className="bg-gradient-brand h-1 w-full" />
               <div className="glow-orb -top-16 -right-10 h-40 w-40" />
               <div className="relative flex flex-col p-5 pb-6">
-                {links.map((l, i) => (
-                  <motion.a
-                    key={l.href}
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.08 + i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="group flex items-center justify-between gap-4 border-b border-border/60 py-4 last:border-0"
-                  >
-                    <span className="flex min-w-0 items-center gap-3">
-                      <span className="text-[10px] font-bold tabular-nums text-primary/70">
-                        0{i + 1}
+                {links.map((l, i) => {
+                  const active = isActive(l.href);
+                  return (
+                    <motion.a
+                      key={l.href}
+                      href={l.href}
+                      aria-current={active ? "page" : undefined}
+                      onClick={(e) => {
+                        if (l.href === "/") onHomeClick(e);
+                        setOpen(false);
+                      }}
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.08 + i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className={cn(
+                        "group flex items-center justify-between gap-4 border-b border-border/60 py-4 last:border-0",
+                        active && "-mx-2 rounded-2xl border-0 bg-primary/8 px-2",
+                      )}
+                    >
+                      <span className="flex min-w-0 items-center gap-3">
+                        {active ? (
+                          <span className="bg-gradient-brand h-5 w-1 shrink-0 rounded-full" />
+                        ) : (
+                          <span className="text-[10px] font-bold tabular-nums text-primary/70">
+                            0{i + 1}
+                          </span>
+                        )}
+                        <span
+                          className={cn(
+                            "truncate font-display text-xl font-extrabold tracking-tight",
+                            active ? "text-primary" : "text-ink",
+                          )}
+                        >
+                          {l.label}
+                        </span>
                       </span>
-                      <span className="truncate font-display text-xl font-extrabold tracking-tight text-ink">
-                        {l.label}
-                      </span>
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
-                  </motion.a>
-                ))}
+                      <ArrowUpRight
+                        className={cn(
+                          "h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary",
+                          active ? "text-primary" : "text-muted-foreground",
+                        )}
+                      />
+                    </motion.a>
+                  );
+                })}
+
                 <motion.div
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
