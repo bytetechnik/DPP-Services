@@ -13,10 +13,10 @@ const copy = {
     intro:
       "Erzählen Sie uns kurz von Ihrem Bedarf – Standort, Schichten und Zeitraum genügen für den Start. Wir melden uns mit einem konkreten Vorschlag zurück.",
     contactItems: [
-      { label: "E-Mail", value: "info@dpp-services.de", href: "mailto:info@dpp-services.de" },
-      { label: "Telefon", value: "+49 176 70800798", href: "tel:+4917670800798" },
-      { label: "Einsatzgebiet", value: "Rhein-Main-Gebiet" },
-      { label: "Erreichbarkeit", value: "Mo–So, Einsätze 24/7" },
+      { label: "E-Mail", value: "info@dpp-services.de", href: "mailto:info@dpp-services.de" as string | undefined },
+      { label: "Telefon", value: "+49 176 70800798", href: "tel:+4917670800798" as string | undefined },
+      { label: "Einsatzgebiet", value: "Rhein-Main-Gebiet", href: undefined as string | undefined },
+      { label: "Erreichbarkeit", value: "Mo–So, Einsätze 24/7", href: undefined as string | undefined },
     ],
     fields: {
       firstName: "Vorname*",
@@ -48,10 +48,10 @@ const copy = {
     intro:
       "Tell us briefly about your needs – location, shifts and timeframe are enough to get started. We'll get back to you with a concrete proposal.",
     contactItems: [
-      { label: "Email", value: "info@dpp-services.de", href: "mailto:info@dpp-services.de" },
-      { label: "Phone", value: "+49 176 70800798", href: "tel:+4917670800798" },
-      { label: "Service area", value: "Rhein-Main region" },
-      { label: "Availability", value: "Mon–Sun, deployments 24/7" },
+      { label: "Email", value: "info@dpp-services.de", href: "mailto:info@dpp-services.de" as string | undefined },
+      { label: "Phone", value: "+49 176 70800798", href: "tel:+4917670800798" as string | undefined },
+      { label: "Service area", value: "Rhein-Main region", href: undefined as string | undefined },
+      { label: "Availability", value: "Mon–Sun, deployments 24/7", href: undefined as string | undefined },
     ],
     fields: {
       firstName: "First name*",

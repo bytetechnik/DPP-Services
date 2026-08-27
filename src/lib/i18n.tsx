@@ -41,7 +41,11 @@ export function useLang() {
 }
 
 /** Widen literal types from `as const` dictionaries so DE/EN shapes stay compatible. */
-type Loose<T> = T extends string
+type Loose<T> = T extends (...args: never[]) => unknown
+  ? T
+  : T extends { $$typeof: symbol }
+    ? T
+    : T extends string
   ? string
   : T extends number
     ? number
