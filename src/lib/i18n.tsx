@@ -40,8 +40,21 @@ export function useLang() {
   return useContext(I18nContext);
 }
 
+/** Widen literal types from `as const` dictionaries so DE/EN shapes stay compatible. */
+type Loose<T> = T extends string
+  ? string
+  : T extends number
+    ? number
+    : T extends boolean
+      ? boolean
+      : T extends readonly (infer U)[]
+        ? Loose<U>[]
+        : T extends object
+          ? { [K in keyof T]: Loose<T[K]> }
+          : T;
+
 /** Pick the copy for the active language from a `{ de, en }` dictionary. */
-export function useCopy<T>(copy: Record<Lang, T>): T {
+export function useCopy<T extends Record<Lang, unknown>>(copy: T): Loose<T["de"]> {
   const { lang } = useLang();
-  return copy[lang];
+  return copy[lang] as Loose<T["de"]>;
 }
