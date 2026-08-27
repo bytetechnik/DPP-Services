@@ -47,7 +47,7 @@ export function SiteHeader() {
         )}
       />
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-4 px-4 sm:h-20 sm:px-6 lg:px-8">
-        <a href="#top" className="flex min-w-0 items-center gap-3">
+        <Link to="/" className="flex min-w-0 items-center gap-3">
           <img
             src={logo.url}
             alt="DPP Services Logo"
@@ -73,7 +73,7 @@ export function SiteHeader() {
               Empfang &amp; Hotelservices
             </span>
           </span>
-        </a>
+        </Link>
 
         <nav className="ml-auto hidden items-center gap-8 lg:flex">
           {links.map((l) => (
@@ -88,13 +88,13 @@ export function SiteHeader() {
               {l.label}
             </a>
           ))}
-          <a
-            href="#kontakt"
+          <Link
+            to="/kontakt"
             className="bg-gradient-brand shadow-brand inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
           >
             <Phone className="h-4 w-4" />
             Kontakt
-          </a>
+          </Link>
         </nav>
 
         <button
@@ -132,14 +132,14 @@ export function SiteHeader() {
                   {l.label}
                 </a>
               ))}
-              <a
-                href="#kontakt"
+              <Link
+                to="/kontakt"
                 onClick={() => setOpen(false)}
                 className="bg-gradient-brand mt-6 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-primary-foreground"
               >
                 <Phone className="h-4 w-4" />
                 Jetzt Kontakt aufnehmen
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}
