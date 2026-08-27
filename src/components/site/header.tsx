@@ -134,10 +134,12 @@ export function SiteHeader() {
         <nav className="ml-auto hidden items-center gap-8 lg:flex">
           {links.map((l) => {
             const active = isActive(l.href);
+            const isHash = l.href.startsWith("/#");
             return (
-              <a
+              <Link
                 key={l.href}
-                href={l.href}
+                to="/"
+                {...(isHash ? { hash: l.href.slice(2) } : { to: l.href })}
                 onClick={l.href === "/" ? onHomeClick : undefined}
                 aria-current={active ? "page" : undefined}
                 className={cn(
@@ -162,9 +164,10 @@ export function SiteHeader() {
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   />
                 )}
-              </a>
+              </Link>
             );
           })}
+
 
           <Link
             to="/kontakt"
