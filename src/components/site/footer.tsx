@@ -2,7 +2,7 @@ import { Mail, MapPin, Clock3, ArrowUp, Phone } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import logo from "@/assets/dpp-logo.asset.json";
 import { useCopy } from "@/lib/i18n";
-import { LanguageSwitcher } from "@/components/site/language-switcher";
+
 
 const copy = {
   de: {
