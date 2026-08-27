@@ -7,13 +7,13 @@ import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/i18n";
 import { LanguageSwitcher } from "./language-switcher";
 
-const hrefs = ["/leistungen", "/ueber-uns", "/#faq"];
+const hrefs = ["/", "/leistungen", "/ueber-uns", "/#faq"];
 
 const copy = {
   de: {
     tagline: "Empfang & Hotelservices",
     logoAlt: "DPP Services Logo",
-    nav: ["Leistungen", "Über uns", "FAQ"],
+    nav: ["Startseite", "Leistungen", "Über uns", "FAQ"],
     contact: "Kontakt",
     contactLong: "Jetzt Kontakt aufnehmen",
     menuOpen: "Menü öffnen",
@@ -22,13 +22,14 @@ const copy = {
   en: {
     tagline: "Reception & Hotel Services",
     logoAlt: "DPP Services logo",
-    nav: ["Services", "About us", "FAQ"],
+    nav: ["Home", "Services", "About us", "FAQ"],
     contact: "Contact",
     contactLong: "Get in touch now",
     menuOpen: "Open menu",
     menuClose: "Close menu",
   },
 } as const;
+
 
 export function SiteHeader() {
   const t = useCopy(copy);
@@ -74,7 +75,8 @@ export function SiteHeader() {
             height={48}
             className="h-10 w-10 shrink-0 rounded-lg object-cover sm:h-12 sm:w-12"
           />
-          <span className="min-w-0">
+          <span className="hidden min-w-0 sm:block">
+
             <span
               className={cn(
                 "block truncate font-display text-sm leading-tight font-extrabold tracking-tight sm:text-base",
