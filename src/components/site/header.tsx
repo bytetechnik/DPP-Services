@@ -4,16 +4,35 @@ import { Menu, X, Phone } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import logo from "@/assets/dpp-logo.asset.json";
 import { cn } from "@/lib/utils";
+import { useCopy } from "@/lib/i18n";
+import { LanguageSwitcher } from "./language-switcher";
 
-const links = [
-  { label: "Leistungen", href: "/leistungen" },
-  { label: "Über uns", href: "/ueber-uns" },
-  { label: "Ablauf", href: "/#ablauf" },
-  { label: "Einblicke", href: "/#einblicke" },
-  { label: "FAQ", href: "/#faq" },
-];
+const hrefs = ["/leistungen", "/ueber-uns", "/#ablauf", "/#einblicke", "/#faq"];
+
+const copy = {
+  de: {
+    tagline: "Empfang & Hotelservices",
+    logoAlt: "DPP Services Logo",
+    nav: ["Leistungen", "Über uns", "Ablauf", "Einblicke", "FAQ"],
+    contact: "Kontakt",
+    contactLong: "Jetzt Kontakt aufnehmen",
+    menuOpen: "Menü öffnen",
+    menuClose: "Menü schließen",
+  },
+  en: {
+    tagline: "Reception & Hotel Services",
+    logoAlt: "DPP Services logo",
+    nav: ["Services", "About us", "How it works", "Insights", "FAQ"],
+    contact: "Contact",
+    contactLong: "Get in touch now",
+    menuOpen: "Open menu",
+    menuClose: "Close menu",
+  },
+} as const;
 
 export function SiteHeader() {
+  const t = useCopy(copy);
+  const links = hrefs.map((href, i) => ({ href, label: t.nav[i] }));
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -50,7 +69,7 @@ export function SiteHeader() {
         <Link to="/" className="flex min-w-0 items-center gap-3">
           <img
             src={logo.url}
-            alt="DPP Services Logo"
+            alt={t.logoAlt}
             width={48}
             height={48}
             className="h-10 w-10 shrink-0 rounded-lg object-cover sm:h-12 sm:w-12"
@@ -70,7 +89,7 @@ export function SiteHeader() {
                 scrolled ? "text-muted-foreground" : "text-white/70",
               )}
             >
-              Empfang &amp; Hotelservices
+              {t.tagline}
             </span>
           </span>
         </Link>
@@ -93,16 +112,21 @@ export function SiteHeader() {
             className="bg-gradient-brand shadow-brand inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
           >
             <Phone className="h-4 w-4" />
-            Kontakt
+            {t.contact}
           </Link>
+          <LanguageSwitcher variant={scrolled ? "dark" : "light"} />
         </nav>
+
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
+          <LanguageSwitcher variant={scrolled ? "dark" : "light"} />
+        </div>
 
         <button
           type="button"
-          aria-label={open ? "Menü schließen" : "Menü öffnen"}
+          aria-label={open ? t.menuClose : t.menuOpen}
           onClick={() => setOpen((v) => !v)}
           className={cn(
-            "ml-auto grid h-11 w-11 shrink-0 place-items-center rounded-full border transition-colors lg:hidden",
+            "grid h-11 w-11 shrink-0 place-items-center rounded-full border transition-colors lg:hidden",
             scrolled
               ? "border-border bg-card text-ink"
               : "border-white/25 bg-white/10 text-white backdrop-blur",
@@ -138,7 +162,7 @@ export function SiteHeader() {
                 className="bg-gradient-brand mt-6 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-primary-foreground"
               >
                 <Phone className="h-4 w-4" />
-                Jetzt Kontakt aufnehmen
+                {t.contactLong}
               </Link>
             </div>
           </motion.div>
