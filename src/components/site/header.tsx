@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, ArrowUpRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import logo from "@/assets/dpp-logo.asset.json";
 import { cn } from "@/lib/utils";
@@ -138,34 +138,72 @@ export function SiteHeader() {
 
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="border-t border-border bg-background/98 px-4 pt-4 pb-8 shadow-lift backdrop-blur-xl lg:hidden"
-          >
-            <div className="flex flex-col">
-              {links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="border-b border-border/70 py-4 font-display text-lg font-semibold text-ink"
+          <>
+            <motion.button
+              type="button"
+              aria-label={t.menuClose}
+              onClick={() => setOpen(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 -z-10 bg-ink/45 backdrop-blur-sm lg:hidden"
+            />
+            <motion.div
+              initial={{ clipPath: "inset(0 0 100% 0)", opacity: 0.4 }}
+              animate={{ clipPath: "inset(0 0 0% 0)", opacity: 1 }}
+              exit={{ clipPath: "inset(0 0 100% 0)", opacity: 0.4 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="relative mx-3 mt-2 overflow-hidden rounded-3xl border border-border/70 bg-background/97 shadow-lift backdrop-blur-2xl lg:hidden"
+            >
+              <div className="bg-gradient-brand h-1 w-full" />
+              <div className="glow-orb -top-16 -right-10 h-40 w-40" />
+              <div className="relative flex flex-col p-5 pb-6">
+                {links.map((l, i) => (
+                  <motion.a
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.08 + i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="group flex items-center justify-between gap-4 border-b border-border/60 py-4 last:border-0"
+                  >
+                    <span className="flex min-w-0 items-center gap-3">
+                      <span className="text-[10px] font-bold tabular-nums text-primary/70">
+                        0{i + 1}
+                      </span>
+                      <span className="truncate font-display text-xl font-extrabold tracking-tight text-ink">
+                        {l.label}
+                      </span>
+                    </span>
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
+                  </motion.a>
+                ))}
+                <motion.div
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.08 + links.length * 0.06, duration: 0.4 }}
+                  className="mt-5"
                 >
-                  {l.label}
-                </a>
-              ))}
-              <Link
-                to="/kontakt"
-                onClick={() => setOpen(false)}
-                className="bg-gradient-brand mt-6 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-primary-foreground"
-              >
-                <Phone className="h-4 w-4" />
-                {t.contactLong}
-              </Link>
-            </div>
-          </motion.div>
+                  <Link
+                    to="/kontakt"
+                    onClick={() => setOpen(false)}
+                    className="bg-gradient-brand shadow-brand flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-bold text-primary-foreground"
+                  >
+                    <Phone className="h-4 w-4" />
+                    {t.contactLong}
+                  </Link>
+                  <a
+                    href="tel:+4917670800798"
+                    className="mt-3 block text-center text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase"
+                  >
+                    +49 176 70800798
+                  </a>
+                </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>
