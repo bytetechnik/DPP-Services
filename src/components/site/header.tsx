@@ -128,18 +128,40 @@ export function SiteHeader() {
         </Link>
 
         <nav className="ml-auto hidden items-center gap-8 lg:flex">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className={cn(
-                "underline-sweep text-sm font-semibold transition-colors",
-                scrolled ? "text-ink-soft hover:text-ink" : "text-white/85 hover:text-white",
-              )}
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) => {
+            const active = isActive(l.href);
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={l.href === "/" ? onHomeClick : undefined}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "underline-sweep relative text-sm font-semibold transition-colors",
+                  active
+                    ? scrolled
+                      ? "text-primary"
+                      : "text-white"
+                    : scrolled
+                      ? "text-ink-soft hover:text-ink"
+                      : "text-white/85 hover:text-white",
+                )}
+              >
+                {l.label}
+                {active && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className={cn(
+                      "absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full",
+                      scrolled ? "bg-gradient-brand" : "bg-white",
+                    )}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  />
+                )}
+              </a>
+            );
+          })}
+
           <Link
             to="/kontakt"
             className="bg-gradient-brand shadow-brand inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
