@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { motion } from "motion/react";
 import { Mail, MapPin, Phone, Send, Clock3 } from "lucide-react";
 import { toast } from "sonner";
 import { Reveal } from "./reveal";
+
 import { useCopy } from "@/lib/i18n";
 
 const contactIcons = [Mail, Phone, MapPin, Clock3];
@@ -86,23 +88,50 @@ export function Contact() {
 
   return (
     <section id="kontakt" className="relative overflow-hidden bg-ink pt-28 pb-20 sm:pt-36 sm:pb-28">
-      <div className="glow-orb -right-24 bottom-0 h-80 w-80 opacity-20" />
+      <motion.div
+        aria-hidden
+        className="glow-orb -right-24 bottom-0 h-80 w-80 opacity-20"
+        animate={{ y: [0, -26, 0], scale: [1, 1.07, 1], opacity: [0.16, 0.26, 0.16] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden
+        className="glow-orb -top-28 -left-20 h-72 w-72 opacity-15"
+        animate={{ y: [0, 22, 0], scale: [1.04, 1, 1.04], opacity: [0.1, 0.2, 0.1] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+      />
       <div className="grid-lines absolute inset-0 opacity-20" />
 
       <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <Reveal>
           <span className="eyebrow text-primary">{t.eyebrow}</span>
-          <h2 className="mt-4 font-display text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl">
+          <motion.h2
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+            className="mt-4 font-display text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl"
+          >
             {t.heading}
-          </h2>
-          <p className="mt-5 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+            className="mt-5 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg"
+          >
             {t.intro}
-          </p>
+          </motion.p>
 
           <div className="mt-10 space-y-5">
-            {contactItems.map((c) => (
-              <div key={c.label} className="flex items-start gap-4">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-white/12 bg-white/5 text-primary">
+            {contactItems.map((c, i) => (
+              <motion.div
+                key={c.label}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.25 + i * 0.08 }}
+                className="group flex items-start gap-4"
+              >
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-white/12 bg-white/5 text-primary transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-primary/40 group-hover:bg-primary/10">
                   <c.icon className="h-5 w-5" />
                 </span>
                 <div className="min-w-0">
@@ -112,7 +141,7 @@ export function Contact() {
                   {c.href ? (
                     <a
                       href={c.href}
-                      className="font-display text-base font-semibold break-words text-white"
+                      className="font-display text-base font-semibold break-words text-white transition-colors duration-300 hover:text-primary"
                     >
                       {c.value}
                     </a>
@@ -120,10 +149,11 @@ export function Contact() {
                     <p className="font-display text-base font-semibold text-white">{c.value}</p>
                   )}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </Reveal>
+
 
         <Reveal delay={0.1}>
           <form
