@@ -7,8 +7,10 @@ import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/i18n";
 import { LanguageSwitcher } from "./language-switcher";
 
+const MotionLink = motion.create(Link);
 
 const hrefs = ["/", "/leistungen", "/ueber-uns", "/#faq"];
+
 
 const copy = {
   de: {
@@ -40,12 +42,16 @@ export function SiteHeader() {
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const hash = useRouterState({ select: (s) => s.location.hash });
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const activeHash = mounted ? hash : "";
 
   const isActive = (href: string) => {
-    if (href === "/") return pathname === "/" && !hash;
-    if (href.startsWith("/#")) return pathname === "/" && hash === href.slice(2);
+    if (href === "/") return pathname === "/" && !activeHash;
+    if (href.startsWith("/#")) return pathname === "/" && activeHash === href.slice(2);
     return pathname === href || pathname.startsWith(`${href}/`);
   };
+
 
   const scrollToTop = () => {
     if (typeof window !== "undefined") {
@@ -130,10 +136,12 @@ export function SiteHeader() {
         <nav className="ml-auto hidden items-center gap-8 lg:flex">
           {links.map((l) => {
             const active = isActive(l.href);
+            const isHash = l.href.startsWith("/#");
             return (
-              <a
+              <Link
                 key={l.href}
-                href={l.href}
+                to="/"
+                {...(isHash ? { hash: l.href.slice(2) } : { to: l.href })}
                 onClick={l.href === "/" ? onHomeClick : undefined}
                 aria-current={active ? "page" : undefined}
                 className={cn(
@@ -158,9 +166,10 @@ export function SiteHeader() {
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   />
                 )}
-              </a>
+              </Link>
             );
           })}
+
 
           <Link
             to="/kontakt"
@@ -216,12 +225,14 @@ export function SiteHeader() {
               <div className="relative flex flex-col p-5 pb-6">
                 {links.map((l, i) => {
                   const active = isActive(l.href);
+                  const isHash = l.href.startsWith("/#");
                   return (
-                    <motion.a
+                    <MotionLink
                       key={l.href}
-                      href={l.href}
+                      to="/"
+                      {...(isHash ? { hash: l.href.slice(2) } : { to: l.href })}
                       aria-current={active ? "page" : undefined}
-                      onClick={(e) => {
+                      onClick={(e: React.MouseEvent) => {
                         if (l.href === "/") onHomeClick(e);
                         setOpen(false);
                       }}
@@ -233,6 +244,7 @@ export function SiteHeader() {
                         active && "-mx-2 rounded-2xl border-0 bg-primary/8 px-2",
                       )}
                     >
+
                       <span className="flex min-w-0 items-center gap-3">
                         {active ? (
                           <span className="bg-gradient-brand h-5 w-1 shrink-0 rounded-full" />
@@ -256,7 +268,7 @@ export function SiteHeader() {
                           active ? "text-primary" : "text-muted-foreground",
                         )}
                       />
-                    </motion.a>
+                    </MotionLink>
                   );
                 })}
 

@@ -7,12 +7,13 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
-import { LanguageProvider } from "@/lib/i18n";
+import { LanguageProvider, resolveInitialLang } from "@/lib/i18n";
+
 
 function NotFoundComponent() {
   return (
@@ -104,8 +105,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const [lang] = useState(() => resolveInitialLang());
   return (
-    <html lang="de">
+    <html lang={lang}>
+
       <head>
         <HeadContent />
       </head>
@@ -119,10 +122,11 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [initialLang] = useState(() => resolveInitialLang());
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
+      <LanguageProvider initialLang={initialLang}>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         <Toaster />
@@ -130,3 +134,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+

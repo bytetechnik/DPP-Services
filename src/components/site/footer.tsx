@@ -100,13 +100,21 @@ export function SiteFooter() {
               {t.navHeading}
             </h3>
             <ul className="mt-5 space-y-3">
-              {t.nav.map((n) => (
-                <li key={n.href}>
-                  <a href={n.href} className="text-sm text-white/70 transition-colors hover:text-white">
-                    {n.label}
-                  </a>
-                </li>
-              ))}
+              {t.nav.map((n) => {
+                const isHash = n.href.startsWith("/#");
+                return (
+                  <li key={n.href}>
+                    <Link
+                      to="/"
+                      {...(isHash ? { hash: n.href.slice(2) } : { to: n.href })}
+                      className="text-sm text-white/70 transition-colors hover:text-white"
+                    >
+                      {n.label}
+                    </Link>
+                  </li>
+                );
+              })}
+
             </ul>
           </div>
 
