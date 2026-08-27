@@ -68,7 +68,7 @@ function KontaktPage() {
   return (
     <div id="top" className="min-h-screen bg-background">
       <SiteHeader />
-      <main className="pt-16 sm:pt-20">
+      <main>
         <Contact />
       </main>
       <SiteFooter />
