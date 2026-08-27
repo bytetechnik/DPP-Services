@@ -60,9 +60,17 @@ export function LanguageProvider({
 }) {
   const [lang, setLangState] = useState<Lang>(initialLang);
 
+  // After hydration, honour the stored preference if the server guessed differently.
+  useEffect(() => {
+    const preferred = readPreferredLang();
+    if (preferred && preferred !== lang) setLangState(preferred);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
+
 
   const setLang = useCallback((next: Lang) => {
     setLangState(next);
