@@ -3,16 +3,9 @@ import { Mail, MapPin, Phone, Send, Clock3 } from "lucide-react";
 import { toast } from "sonner";
 import { Reveal } from "./reveal";
 
-const services = [
-  "Empfangsdienst / Hotelrezeption",
-  "Night Audit",
-  "Hotelservice / Tagung / Servicekräfte",
-  "Büro-Empfang",
-  "Sonstiges",
-];
-
 export function Contact() {
   const [sending, setSending] = useState(false);
+
 
   return (
     <section id="kontakt" className="relative overflow-hidden bg-ink py-20 sm:py-28">
@@ -78,41 +71,55 @@ export function Contact() {
             className="rounded-3xl border border-white/12 bg-white/5 p-6 backdrop-blur-xl sm:p-8"
           >
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Name" name="name" placeholder="Ihr Name" required />
-              <Field label="Unternehmen" name="company" placeholder="Hotel / Firma" />
-              <Field label="E-Mail" name="email" type="email" placeholder="name@unternehmen.de" required />
-              <Field label="Telefon" name="phone" placeholder="Optional" />
+              <Field label="Vorname*" name="firstName" placeholder="Vorname" required maxLength={100} />
+              <Field label="Nachname*" name="lastName" placeholder="Nachname" required maxLength={100} />
+              <Field label="Position*" name="position" placeholder="z. B. Hotelleitung" required maxLength={100} />
+              <Field
+                label="Unternehmensname*"
+                name="company"
+                placeholder="Hotel / Firma"
+                required
+                maxLength={150}
+              />
+              <Field
+                label="Adresse*"
+                name="address"
+                placeholder="Straße, PLZ, Ort"
+                required
+                maxLength={200}
+              />
+              <Field
+                label="E-Mail-Adresse*"
+                name="email"
+                type="email"
+                placeholder="name@unternehmen.de"
+                required
+                maxLength={255}
+              />
+              <Field
+                label="Telefonnummer*"
+                name="phone"
+                type="tel"
+                placeholder="+49 …"
+                required
+                maxLength={30}
+              />
             </div>
 
             <label className="mt-5 block">
               <span className="text-[11px] font-bold tracking-[0.18em] text-white/60 uppercase">
-                Leistung
-              </span>
-              <select
-                name="service"
-                defaultValue={services[0]}
-                className="mt-2 w-full rounded-xl border border-white/15 bg-ink/60 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-primary"
-              >
-                {services.map((s) => (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className="mt-5 block">
-              <span className="text-[11px] font-bold tracking-[0.18em] text-white/60 uppercase">
-                Ihre Nachricht
+                Beschreibung / Anfrage*
               </span>
               <textarea
-                name="message"
+                name="description"
                 rows={5}
                 required
+                maxLength={1000}
                 placeholder="Standort, Zeitraum, Schichten, Besonderheiten …"
                 className="mt-2 w-full resize-none rounded-xl border border-white/15 bg-ink/60 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition-colors focus:border-primary"
               />
             </label>
+
 
             <button
               type="submit"
@@ -120,7 +127,7 @@ export function Contact() {
               className="bg-gradient-brand shadow-brand mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-60"
             >
               <Send className="h-4 w-4" />
-              {sending ? "Wird gesendet …" : "Anfrage absenden"}
+              {sending ? "Wird gesendet …" : "Einreichen"}
             </button>
             <p className="mt-4 text-center text-xs text-white/45">
               Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage genutzt.
@@ -138,12 +145,14 @@ function Field({
   type = "text",
   placeholder,
   required,
+  maxLength,
 }: {
   label: string;
   name: string;
   type?: string;
   placeholder?: string;
   required?: boolean;
+  maxLength?: number;
 }) {
   return (
     <label className="block min-w-0">
@@ -154,6 +163,7 @@ function Field({
         type={type}
         name={name}
         required={required}
+        maxLength={maxLength}
         placeholder={placeholder}
         className="mt-2 w-full rounded-xl border border-white/15 bg-ink/60 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition-colors focus:border-primary"
       />
