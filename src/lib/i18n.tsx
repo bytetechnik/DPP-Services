@@ -40,7 +40,7 @@ export function readPreferredLang(): Lang | null {
   } catch {
     stored = null;
   }
-  return normalize(fromCookie) ?? normalize(stored);
+  return normalize(fromCookie) ?? normalize(stored) ?? null;
 }
 
 
