@@ -40,12 +40,16 @@ export function SiteHeader() {
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const hash = useRouterState({ select: (s) => s.location.hash });
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const activeHash = mounted ? hash : "";
 
   const isActive = (href: string) => {
-    if (href === "/") return pathname === "/" && !hash;
-    if (href.startsWith("/#")) return pathname === "/" && hash === href.slice(2);
+    if (href === "/") return pathname === "/" && !activeHash;
+    if (href.startsWith("/#")) return pathname === "/" && activeHash === href.slice(2);
     return pathname === href || pathname.startsWith(`${href}/`);
   };
+
 
   const scrollToTop = () => {
     if (typeof window !== "undefined") {
