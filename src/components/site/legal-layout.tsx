@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
-import logo from "@/assets/dpp-logo.asset.json";
 import { SiteFooter } from "./footer";
 import { useCopy } from "@/lib/i18n";
 
@@ -34,7 +33,7 @@ export function LegalLayout({
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-4 px-4 sm:h-20 sm:px-6 lg:px-8">
           <Link to="/" className="flex min-w-0 items-center gap-3">
             <img
-              src={logo.url}
+              src="/Icon.jpeg"
               alt="DPP Services Logo"
               width={48}
               height={48}

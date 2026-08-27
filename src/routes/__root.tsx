@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { LanguageProvider, resolveInitialLang } from "@/lib/i18n";
+import { SITE_LOGO } from "@/lib/site";
 
 
 function NotFoundComponent() {
@@ -82,14 +83,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "author", content: "DPP Services" },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: SITE_LOGO },
+      { property: "og:image:alt", content: "DPP Services Logo" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: SITE_LOGO },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "32x32" },
+      { rel: "icon", href: "/Icon.jpeg", type: "image/jpeg", sizes: "any" },
+      { rel: "apple-touch-icon", href: "/Icon.jpeg" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

@@ -1,6 +1,5 @@
 import { Mail, MapPin, Clock3, ArrowUp, Phone } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import logo from "@/assets/dpp-logo.asset.json";
 import { useCopy } from "@/lib/i18n";
 
 
@@ -33,6 +32,7 @@ const copy = {
     impressum: "Impressum",
     datenschutz: "Datenschutz",
     top: "Nach oben",
+    developedBy: "Entwickelt von",
     logoAlt: "DPP Services Logo",
     mailAria: "E-Mail an DPP Services senden",
     callAria: "DPP Services anrufen",
@@ -65,6 +65,7 @@ const copy = {
     impressum: "Legal notice",
     datenschutz: "Privacy policy",
     top: "Back to top",
+    developedBy: "Developed by",
     logoAlt: "DPP Services logo",
     mailAria: "Send an email to DPP Services",
     callAria: "Call DPP Services",
@@ -80,7 +81,7 @@ export function SiteFooter() {
           <div>
             <Link to="/" className="flex items-center gap-3">
               <img
-                src={logo.url}
+                src="/Icon.jpeg"
                 alt={t.logoAlt}
                 width={48}
                 height={48}
@@ -177,9 +178,22 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-white/45">
-            © {new Date().getFullYear()} DPP Services. {t.rights}
-          </p>
+          <div className="space-y-1">
+            <p className="text-xs text-white/45">
+              © {new Date().getFullYear()} DPP Services. {t.rights}
+            </p>
+            <p className="text-xs text-white/45">
+              {t.developedBy}{" "}
+              <a
+                href="https://bytetechnik.de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors hover:text-white"
+              >
+                ByteTechnik.de
+              </a>
+            </p>
+          </div>
           <div className="flex items-center gap-6">
             <Link to="/impressum" className="text-xs text-white/45 transition-colors hover:text-white">
               {t.impressum}

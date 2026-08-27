@@ -5,6 +5,7 @@ import { About } from "@/components/site/about";
 import { SiteFooter } from "@/components/site/footer";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/reveal";
 import { useCopy } from "@/lib/i18n";
+import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
 
 const title = "Über uns | DPP Services – Empfang & Hotelservices";
 const description =
@@ -19,9 +20,9 @@ export const Route = createFileRoute("/ueber-uns")({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: "https://dpp-modern-revival.lovable.app/ueber-uns" },
+      { property: "og:url", content: `${SITE_ORIGIN}/ueber-uns` },
     ],
-    links: [{ rel: "canonical", href: "https://dpp-modern-revival.lovable.app/ueber-uns" }],
+    links: [{ rel: "canonical", href: `${SITE_ORIGIN}/ueber-uns` }],
     scripts: [
       {
         type: "application/ld+json",
@@ -30,9 +31,11 @@ export const Route = createFileRoute("/ueber-uns")({
           "@graph": [
           {
             "@type": "LocalBusiness",
-            "@id": "https://dpp-modern-revival.lovable.app/#business",
+            "@id": `${SITE_ORIGIN}/#business`,
             name: "DPP Services GbR",
-            url: "https://dpp-modern-revival.lovable.app/",
+            url: `${SITE_ORIGIN}/`,
+            logo: SITE_LOGO,
+            image: SITE_LOGO,
             telephone: "+4917670800798",
             email: "info@dpp-services.de",
             address: {
@@ -49,14 +52,14 @@ export const Route = createFileRoute("/ueber-uns")({
             "@type": "AboutPage",
             name: title,
             description,
-            url: "https://dpp-modern-revival.lovable.app/ueber-uns",
-            mainEntity: { "@id": "https://dpp-modern-revival.lovable.app/#business" },
+            url: `${SITE_ORIGIN}/ueber-uns`,
+            mainEntity: { "@id": `${SITE_ORIGIN}/#business` },
           },
           {
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Startseite", item: "https://dpp-modern-revival.lovable.app/" },
-              { "@type": "ListItem", position: 2, name: "Über uns", item: "https://dpp-modern-revival.lovable.app/ueber-uns" },
+              { "@type": "ListItem", position: 1, name: "Startseite", item: `${SITE_ORIGIN}/` },
+              { "@type": "ListItem", position: 2, name: "Über uns", item: `${SITE_ORIGIN}/ueber-uns` },
             ],
           },
           ],

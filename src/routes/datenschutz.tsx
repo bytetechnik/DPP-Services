@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LegalLayout, LegalSection } from "@/components/site/legal-layout";
 import { useCopy } from "@/lib/i18n";
+import { SITE_ORIGIN } from "@/lib/site";
 
 const title = "Datenschutzerklärung | DPP Services";
 const description =
@@ -13,11 +14,11 @@ export const Route = createFileRoute("/datenschutz")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
-      { property: "og:url", content: "https://dpp-modern-revival.lovable.app/datenschutz" },
+      { property: "og:url", content: `${SITE_ORIGIN}/datenschutz` },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://dpp-modern-revival.lovable.app/datenschutz" }],
+    links: [{ rel: "canonical", href: `${SITE_ORIGIN}/datenschutz` }],
   }),
   component: DatenschutzPage,
 });

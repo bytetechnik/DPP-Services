@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://dpp-modern-revival.lovable.app/sitemap.xml
+Sitemap: https://www.dpp-services.de/sitemap.xml

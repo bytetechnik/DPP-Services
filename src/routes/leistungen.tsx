@@ -5,6 +5,7 @@ import { Services } from "@/components/site/services";
 import { SiteFooter } from "@/components/site/footer";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/reveal";
 import { useCopy } from "@/lib/i18n";
+import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
 
 const title = "Leistungen | Empfangsdienst, Night Audit & Hotelservice";
 const description =
@@ -19,9 +20,9 @@ export const Route = createFileRoute("/leistungen")({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: "https://dpp-modern-revival.lovable.app/leistungen" },
+      { property: "og:url", content: `${SITE_ORIGIN}/leistungen` },
     ],
-    links: [{ rel: "canonical", href: "https://dpp-modern-revival.lovable.app/leistungen" }],
+    links: [{ rel: "canonical", href: `${SITE_ORIGIN}/leistungen` }],
     scripts: [
       {
         type: "application/ld+json",
@@ -30,9 +31,11 @@ export const Route = createFileRoute("/leistungen")({
           "@graph": [
           {
             "@type": "LocalBusiness",
-            "@id": "https://dpp-modern-revival.lovable.app/#business",
+            "@id": `${SITE_ORIGIN}/#business`,
             name: "DPP Services GbR",
-            url: "https://dpp-modern-revival.lovable.app/",
+            url: `${SITE_ORIGIN}/`,
+            logo: SITE_LOGO,
+            image: SITE_LOGO,
             telephone: "+4917670800798",
             email: "info@dpp-services.de",
             address: {
@@ -50,14 +53,14 @@ export const Route = createFileRoute("/leistungen")({
             name: "Empfangs- und Hotelservices",
             description,
             serviceType: "Empfangsdienst, Hotelrezeption, Night Audit, Tagungsservice, Büro-Empfang",
-            provider: { "@id": "https://dpp-modern-revival.lovable.app/#business" },
+            provider: { "@id": `${SITE_ORIGIN}/#business` },
             areaServed: "Rhein-Main-Gebiet",
           },
           {
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Startseite", item: "https://dpp-modern-revival.lovable.app/" },
-              { "@type": "ListItem", position: 2, name: "Leistungen", item: "https://dpp-modern-revival.lovable.app/leistungen" },
+              { "@type": "ListItem", position: 1, name: "Startseite", item: `${SITE_ORIGIN}/` },
+              { "@type": "ListItem", position: 2, name: "Leistungen", item: `${SITE_ORIGIN}/leistungen` },
             ],
           },
           ],

@@ -6,6 +6,7 @@ import { Insights } from "@/components/site/insights";
 import { Faq } from "@/components/site/faq";
 
 import { SiteFooter } from "@/components/site/footer";
+import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
 
 const title = "DPP Services | Empfangsdienst & Hotelpersonal Rhein-Main";
 const description =
@@ -18,11 +19,11 @@ export const Route = createFileRoute("/")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
-      { property: "og:url", content: "https://dpp-modern-revival.lovable.app/" },
+      { property: "og:url", content: `${SITE_ORIGIN}/` },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://dpp-modern-revival.lovable.app/" }],
+    links: [{ rel: "canonical", href: `${SITE_ORIGIN}/` }],
     scripts: [
       {
         type: "application/ld+json",
@@ -31,7 +32,9 @@ export const Route = createFileRoute("/")({
           "@type": "LocalBusiness",
           name: "DPP Services GbR",
           description,
-          url: "https://dpp-modern-revival.lovable.app/",
+          url: `${SITE_ORIGIN}/`,
+          logo: SITE_LOGO,
+          image: SITE_LOGO,
           telephone: "+4917670800798",
           email: "info@dpp-services.de",
           address: {

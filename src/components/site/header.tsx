@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, Phone, ArrowUpRight } from "lucide-react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import logo from "@/assets/dpp-logo.asset.json";
 import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/i18n";
 import { LanguageSwitcher } from "./language-switcher";
@@ -108,7 +107,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-4 px-4 sm:h-20 sm:px-6 lg:px-8">
         <Link to="/" onClick={onHomeClick} className="flex min-w-0 items-center gap-3">
           <img
-            src={logo.url}
+            src="/Icon.jpeg"
             alt={t.logoAlt}
             width={48}
             height={48}

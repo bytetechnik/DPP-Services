@@ -79,7 +79,7 @@ export function Hero() {
             <span className="text-gradient-brand">{t.titleLine2}</span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">
+          <p className="mt-4 max-w-xl text-sm leading-snug text-white/75 sm:mt-6 sm:text-lg sm:leading-relaxed">
             {t.paragraph}
           </p>
 
