@@ -96,7 +96,7 @@ export function Insights() {
                 </h3>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
                 <a
-                  href="#kontakt"
+                  href="/kontakt"
                   className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary-deep"
                 >
                   Mehr erfahren
