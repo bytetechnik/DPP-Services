@@ -33,6 +33,9 @@ const copy = {
     impressum: "Impressum",
     datenschutz: "Datenschutz",
     top: "Nach oben",
+    logoAlt: "DPP Services Logo",
+    mailAria: "E-Mail an DPP Services senden",
+    callAria: "DPP Services anrufen",
   },
   en: {
     tagline: "Reception & Hotel Services",
@@ -62,6 +65,9 @@ const copy = {
     impressum: "Legal notice",
     datenschutz: "Privacy policy",
     top: "Back to top",
+    logoAlt: "DPP Services logo",
+    mailAria: "Send an email to DPP Services",
+    callAria: "Call DPP Services",
   },
 };
 
@@ -75,7 +81,7 @@ export function SiteFooter() {
             <Link to="/" className="flex items-center gap-3">
               <img
                 src={logo.url}
-                alt="DPP Services Logo"
+                alt={t.logoAlt}
                 width={48}
                 height={48}
                 className="h-11 w-11 rounded-lg object-cover"
@@ -138,13 +144,17 @@ export function SiteFooter() {
             <ul className="mt-5 space-y-4">
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <a href="mailto:info@dpp-services.de" className="break-words hover:text-white">
+                <a
+                  href="mailto:info@dpp-services.de"
+                  aria-label={t.mailAria}
+                  className="break-words hover:text-white"
+                >
                   info@dpp-services.de
                 </a>
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <a href="tel:+4917670800798" className="hover:text-white">
+                <a href="tel:+4917670800798" aria-label={t.callAria} className="hover:text-white">
                   +49 176 70800798
                 </a>
               </li>

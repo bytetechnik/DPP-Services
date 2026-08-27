@@ -16,6 +16,7 @@ const copy = {
   de: {
     tagline: "Empfang & Hotelservices",
     logoAlt: "DPP Services Logo",
+    callAria: "DPP Services anrufen",
     nav: ["Startseite", "Leistungen", "Über uns", "FAQ"],
     contact: "Kontakt",
     contactLong: "Jetzt Kontakt aufnehmen",
@@ -25,6 +26,7 @@ const copy = {
   en: {
     tagline: "Reception & Hotel Services",
     logoAlt: "DPP Services logo",
+    callAria: "Call DPP Services",
     nav: ["Home", "Services", "About us", "FAQ"],
     contact: "Contact",
     contactLong: "Get in touch now",
@@ -288,6 +290,7 @@ export function SiteHeader() {
                   </Link>
                   <a
                     href="tel:+4917670800798"
+                    aria-label={t.callAria}
                     className="mt-3 block text-center text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase"
                   >
                     +49 176 70800798

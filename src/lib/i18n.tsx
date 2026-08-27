@@ -22,19 +22,27 @@ export const resolveInitialLang = createIsomorphicFn()
     }
   })
 
-  .client((): Lang => {
-    const fromCookie = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith(`${LANG_STORAGE_KEY}=`))
-      ?.split("=")[1];
-    let stored: string | null = null;
-    try {
-      stored = window.localStorage.getItem(LANG_STORAGE_KEY);
-    } catch {
-      stored = null;
-    }
-    return normalize(fromCookie) ?? normalize(stored) ?? "de";
-  });
+  // On the client the first render must match the server-rendered HTML, so we
+  // read what the server already put on <html lang>. The real preference is
+  // applied right after mount (see LanguageProvider).
+  .client((): Lang => normalize(document.documentElement.lang) ?? "de");
+
+/** Client-only: the visitor's stored preference (cookie first, then localStorage). */
+export function readPreferredLang(): Lang | null {
+  if (typeof document === "undefined") return null;
+  const fromCookie = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith(`${LANG_STORAGE_KEY}=`))
+    ?.split("=")[1];
+  let stored: string | null = null;
+  try {
+    stored = window.localStorage.getItem(LANG_STORAGE_KEY);
+  } catch {
+    stored = null;
+  }
+  return normalize(fromCookie) ?? normalize(stored) ?? null;
+}
+
 
 type I18nContextValue = {
   lang: Lang;
@@ -52,9 +60,17 @@ export function LanguageProvider({
 }) {
   const [lang, setLangState] = useState<Lang>(initialLang);
 
+  // After hydration, honour the stored preference if the server guessed differently.
+  useEffect(() => {
+    const preferred = readPreferredLang();
+    if (preferred && preferred !== lang) setLangState(preferred);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
+
 
   const setLang = useCallback((next: Lang) => {
     setLangState(next);

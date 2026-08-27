@@ -1,12 +1,25 @@
 import { motion } from "motion/react";
 import { Globe } from "lucide-react";
-import { useLang, type Lang } from "@/lib/i18n";
+import { useCopy, useLang, type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-const options: { value: Lang; label: string; aria: string }[] = [
-  { value: "de", label: "DE", aria: "Auf Deutsch anzeigen" },
-  { value: "en", label: "EN", aria: "Switch to English" },
+const options: { value: Lang; label: string }[] = [
+  { value: "de", label: "DE" },
+  { value: "en", label: "EN" },
 ];
+
+const copy = {
+  de: {
+    group: "Sprache wählen",
+    de: "Auf Deutsch anzeigen",
+    en: "Auf Englisch anzeigen",
+  },
+  en: {
+    group: "Select language",
+    de: "Show in German",
+    en: "Show in English",
+  },
+};
 
 export function LanguageSwitcher({
   variant = "light",
@@ -18,11 +31,12 @@ export function LanguageSwitcher({
   id?: string;
 }) {
   const { lang, setLang } = useLang();
+  const t = useCopy(copy);
 
   return (
     <div
       role="group"
-      aria-label="Sprache / Language"
+      aria-label={t.group}
       className={cn(
         "relative flex items-center gap-1 rounded-full border p-1 backdrop-blur",
         variant === "light"
@@ -44,7 +58,7 @@ export function LanguageSwitcher({
             key={o.value}
             type="button"
             onClick={() => setLang(o.value)}
-            aria-label={o.aria}
+            aria-label={o.value === "de" ? t.de : t.en}
             aria-pressed={active}
             className={cn(
               "relative rounded-full px-2.5 py-1 text-[11px] font-bold tracking-[0.12em] transition-colors duration-300",
