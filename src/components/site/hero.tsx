@@ -52,14 +52,14 @@ export function Hero() {
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              href="#kontakt"
+              href="/kontakt"
               className="bg-gradient-brand shadow-brand group inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
             >
               Unverbindlich anfragen
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
             <a
-              href="#leistungen"
+              href="/leistungen"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/5 px-7 py-4 text-sm font-bold text-white backdrop-blur transition-colors duration-300 hover:bg-white/15"
             >
               Leistungen entdecken

@@ -84,7 +84,7 @@ export function Services() {
                     ))}
                   </ul>
                   <a
-                    href="#kontakt"
+                    href="/kontakt"
                     className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary-deep"
                   >
                     Anfrage stellen
@@ -107,7 +107,7 @@ export function Services() {
               </h3>
             </div>
             <a
-              href="#kontakt"
+              href="/kontakt"
               className="bg-gradient-brand inline-flex shrink-0 items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-primary-foreground"
             >
               Schicht anfragen

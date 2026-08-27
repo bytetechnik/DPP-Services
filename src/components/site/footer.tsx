@@ -3,8 +3,8 @@ import { Link } from "@tanstack/react-router";
 import logo from "@/assets/dpp-logo.asset.json";
 
 const nav = [
-  { label: "Leistungen", href: "/#leistungen" },
-  { label: "Über uns", href: "/#ueber-uns" },
+  { label: "Leistungen", href: "/leistungen" },
+  { label: "Über uns", href: "/ueber-uns" },
   { label: "Ablauf", href: "/#ablauf" },
   { label: "Einblicke", href: "/#einblicke" },
   { label: "FAQ", href: "/#faq" },

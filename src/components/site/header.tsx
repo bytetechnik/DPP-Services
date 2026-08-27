@@ -6,8 +6,8 @@ import logo from "@/assets/dpp-logo.asset.json";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "Leistungen", href: "/#leistungen" },
-  { label: "Über uns", href: "/#ueber-uns" },
+  { label: "Leistungen", href: "/leistungen" },
+  { label: "Über uns", href: "/ueber-uns" },
   { label: "Ablauf", href: "/#ablauf" },
   { label: "Einblicke", href: "/#einblicke" },
   { label: "FAQ", href: "/#faq" },
