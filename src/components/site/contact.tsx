@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { motion } from "motion/react";
 import { Mail, MapPin, Phone, Send, Clock3 } from "lucide-react";
 import { toast } from "sonner";
 import { Reveal } from "./reveal";
+
 import { useCopy } from "@/lib/i18n";
 
 const contactIcons = [Mail, Phone, MapPin, Clock3];
