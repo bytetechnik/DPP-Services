@@ -105,8 +105,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const [lang] = useState(() => resolveInitialLang());
   return (
-    <html lang="de">
+    <html lang={lang}>
+
       <head>
         <HeadContent />
       </head>
