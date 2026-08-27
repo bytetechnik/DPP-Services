@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Globe } from "lucide-react";
+
 import { useCopy, useLang, type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
