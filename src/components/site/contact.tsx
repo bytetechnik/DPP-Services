@@ -145,12 +145,14 @@ function Field({
   type = "text",
   placeholder,
   required,
+  maxLength,
 }: {
   label: string;
   name: string;
   type?: string;
   placeholder?: string;
   required?: boolean;
+  maxLength?: number;
 }) {
   return (
     <label className="block min-w-0">
@@ -161,6 +163,7 @@ function Field({
         type={type}
         name={name}
         required={required}
+        maxLength={maxLength}
         placeholder={placeholder}
         className="mt-2 w-full rounded-xl border border-white/15 bg-ink/60 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition-colors focus:border-primary"
       />
