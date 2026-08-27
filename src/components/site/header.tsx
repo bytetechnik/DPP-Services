@@ -7,8 +7,10 @@ import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/i18n";
 import { LanguageSwitcher } from "./language-switcher";
 
+const MotionLink = motion.create(Link);
 
 const hrefs = ["/", "/leistungen", "/ueber-uns", "/#faq"];
+
 
 const copy = {
   de: {
@@ -266,7 +268,7 @@ export function SiteHeader() {
                           active ? "text-primary" : "text-muted-foreground",
                         )}
                       />
-                    </motion.a>
+                    </MotionLink>
                   );
                 })}
 
