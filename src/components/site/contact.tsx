@@ -85,7 +85,7 @@ export function Contact() {
   const contactItems = t.contactItems.map((c, i) => ({ ...c, icon: contactIcons[i]! }));
 
   return (
-    <section id="kontakt" className="relative overflow-hidden bg-ink py-20 sm:py-28">
+    <section id="kontakt" className="relative overflow-hidden bg-ink pt-28 pb-20 sm:pt-36 sm:pb-28">
       <div className="glow-orb -right-24 bottom-0 h-80 w-80 opacity-20" />
       <div className="grid-lines absolute inset-0 opacity-20" />
 
