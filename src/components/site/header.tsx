@@ -7,13 +7,13 @@ import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/i18n";
 import { LanguageSwitcher } from "./language-switcher";
 
-const hrefs = ["/leistungen", "/ueber-uns", "/#ablauf", "/#einblicke", "/#faq"];
+const hrefs = ["/leistungen", "/ueber-uns", "/#faq"];
 
 const copy = {
   de: {
     tagline: "Empfang & Hotelservices",
     logoAlt: "DPP Services Logo",
-    nav: ["Leistungen", "Über uns", "Ablauf", "Einblicke", "FAQ"],
+    nav: ["Leistungen", "Über uns", "FAQ"],
     contact: "Kontakt",
     contactLong: "Jetzt Kontakt aufnehmen",
     menuOpen: "Menü öffnen",
@@ -22,7 +22,7 @@ const copy = {
   en: {
     tagline: "Reception & Hotel Services",
     logoAlt: "DPP Services logo",
-    nav: ["Services", "About us", "How it works", "Insights", "FAQ"],
+    nav: ["Services", "About us", "FAQ"],
     contact: "Contact",
     contactLong: "Get in touch now",
     menuOpen: "Open menu",
