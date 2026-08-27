@@ -98,7 +98,7 @@ export function SiteFooter() {
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
               {t.description}
             </p>
-            <LanguageSwitcher variant="light" className="mt-5" />
+            
           </div>
 
           <div>
