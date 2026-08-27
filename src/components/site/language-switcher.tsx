@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Globe } from "lucide-react";
+
 import { useCopy, useLang, type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -45,12 +45,6 @@ export function LanguageSwitcher({
         className,
       )}
     >
-      <Globe
-        className={cn(
-          "ml-1.5 h-3.5 w-3.5 shrink-0",
-          variant === "light" ? "text-white/60" : "text-ink/50",
-        )}
-      />
       {options.map((o) => {
         const active = o.value === lang;
         return (

@@ -2,7 +2,7 @@ import { Mail, MapPin, Clock3, ArrowUp, Phone } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import logo from "@/assets/dpp-logo.asset.json";
 import { useCopy } from "@/lib/i18n";
-import { LanguageSwitcher } from "@/components/site/language-switcher";
+
 
 const copy = {
   de: {
@@ -98,7 +98,7 @@ export function SiteFooter() {
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
               {t.description}
             </p>
-            <LanguageSwitcher variant="light" className="mt-5" />
+            
           </div>
 
           <div>
