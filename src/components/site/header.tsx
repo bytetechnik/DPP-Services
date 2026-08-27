@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, Phone, ArrowUpRight } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import logo from "@/assets/dpp-logo.asset.json";
 import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/i18n";
 import { LanguageSwitcher } from "./language-switcher";
+
 
 const hrefs = ["/", "/leistungen", "/ueber-uns", "/#faq"];
 
