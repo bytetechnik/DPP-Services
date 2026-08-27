@@ -1,13 +1,12 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { createIsomorphicFn } from "@tanstack/react-start";
 
-export type Lang = "de" | "en";
+import { LANG_STORAGE_KEY, normalizeLang as normalize, type Lang } from "./lang-shared";
+import { readLangCookie } from "./lang.server";
 
-export const LANG_STORAGE_KEY = "dpp-lang";
+export type { Lang };
+export { LANG_STORAGE_KEY };
 
-function normalize(value: string | undefined | null): Lang | undefined {
-  return value === "en" || value === "de" ? value : undefined;
-}
 
 /**
  * Resolves the visitor's language on both server (cookie header) and client
