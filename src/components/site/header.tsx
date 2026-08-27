@@ -150,11 +150,11 @@ export function SiteHeader() {
               className="fixed inset-0 -z-10 bg-ink/45 backdrop-blur-sm lg:hidden"
             />
             <motion.div
-              initial={{ clipPath: "inset(0 0 100% 0)", opacity: 0.4 }}
-              animate={{ clipPath: "inset(0 0 0% 0)", opacity: 1 }}
-              exit={{ clipPath: "inset(0 0 100% 0)", opacity: 0.4 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="relative mx-3 mt-2 overflow-hidden rounded-3xl border border-border/70 bg-background/97 shadow-lift backdrop-blur-2xl lg:hidden"
+              initial={{ opacity: 0, y: -16, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -16, scale: 0.98 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="relative z-10 mx-3 mt-2 origin-top overflow-hidden rounded-3xl border border-border/70 bg-background shadow-lift lg:hidden"
             >
               <div className="bg-gradient-brand h-1 w-full" />
               <div className="glow-orb -top-16 -right-10 h-40 w-40" />
