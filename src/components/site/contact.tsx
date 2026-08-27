@@ -33,7 +33,7 @@ export function Contact() {
           <div className="mt-10 space-y-5">
             {[
               { icon: Mail, label: "E-Mail", value: "info@dpp-services.de", href: "mailto:info@dpp-services.de" },
-              { icon: Phone, label: "Telefon", value: "Rückruf auf Anfrage", href: "#kontakt" },
+              { icon: Phone, label: "Telefon", value: "+49 176 70800798", href: "tel:+4917670800798" },
               { icon: MapPin, label: "Einsatzgebiet", value: "Rhein-Main-Gebiet" },
               { icon: Clock3, label: "Erreichbarkeit", value: "Mo–So, Einsätze 24/7" },
             ].map((c) => (
