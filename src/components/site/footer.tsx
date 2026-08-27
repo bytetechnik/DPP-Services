@@ -1,13 +1,14 @@
-import { Mail, MapPin, Clock3, ArrowUp } from "lucide-react";
+import { Mail, MapPin, Clock3, ArrowUp, Phone } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import logo from "@/assets/dpp-logo.asset.json";
 
 const nav = [
-  { label: "Leistungen", href: "#leistungen" },
-  { label: "Über uns", href: "#ueber-uns" },
-  { label: "Ablauf", href: "#ablauf" },
-  { label: "Einblicke", href: "#einblicke" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Kontakt", href: "#kontakt" },
+  { label: "Leistungen", href: "/#leistungen" },
+  { label: "Über uns", href: "/#ueber-uns" },
+  { label: "Ablauf", href: "/#ablauf" },
+  { label: "Einblicke", href: "/#einblicke" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Kontakt", href: "/#kontakt" },
 ];
 
 const leistungen = [
@@ -25,7 +26,7 @@ export function SiteFooter() {
       <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <a href="#top" className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3">
               <img
                 src={logo.url}
                 alt="DPP Services Logo"
@@ -41,7 +42,7 @@ export function SiteFooter() {
                   Empfang &amp; Hotelservices
                 </span>
               </span>
-            </a>
+            </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
               Professionelles Empfangs- und Hotelpersonal für das Rhein-Main-Gebiet – zuverlässig,
               diskret und kurzfristig verfügbar.
@@ -88,6 +89,12 @@ export function SiteFooter() {
                 </a>
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <a href="tel:+4917670800798" className="hover:text-white">
+                  +49 176 70800798
+                </a>
+              </li>
+              <li className="flex items-start gap-3 text-sm text-white/70">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                 Rhein-Main-Gebiet
               </li>
@@ -97,7 +104,7 @@ export function SiteFooter() {
               </li>
             </ul>
             <a
-              href="#kontakt"
+              href="/#kontakt"
               className="bg-gradient-brand shadow-brand mt-6 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
             >
               Anfrage senden
@@ -110,8 +117,12 @@ export function SiteFooter() {
             © {new Date().getFullYear()} DPP Services. Alle Rechte vorbehalten.
           </p>
           <div className="flex items-center gap-6">
-            <span className="text-xs text-white/45">Impressum</span>
-            <span className="text-xs text-white/45">Datenschutz</span>
+            <Link to="/impressum" className="text-xs text-white/45 transition-colors hover:text-white">
+              Impressum
+            </Link>
+            <Link to="/datenschutz" className="text-xs text-white/45 transition-colors hover:text-white">
+              Datenschutz
+            </Link>
             <a
               href="#top"
               aria-label="Nach oben"
