@@ -13,8 +13,6 @@ const copy = {
     nav: [
       { label: "Leistungen", href: "/leistungen" },
       { label: "Über uns", href: "/ueber-uns" },
-      { label: "Ablauf", href: "/#ablauf" },
-      { label: "Einblicke", href: "/#einblicke" },
       { label: "FAQ", href: "/#faq" },
       { label: "Kontakt", href: "/kontakt" },
     ],
@@ -44,8 +42,6 @@ const copy = {
     nav: [
       { label: "Services", href: "/leistungen" },
       { label: "About us", href: "/ueber-uns" },
-      { label: "Process", href: "/#ablauf" },
-      { label: "Insights", href: "/#einblicke" },
       { label: "FAQ", href: "/#faq" },
       { label: "Contact", href: "/kontakt" },
     ],
