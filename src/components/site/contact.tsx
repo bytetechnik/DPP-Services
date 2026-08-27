@@ -127,7 +127,7 @@ export function Contact() {
               className="bg-gradient-brand shadow-brand mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-60"
             >
               <Send className="h-4 w-4" />
-              {sending ? "Wird gesendet …" : "Anfrage absenden"}
+              {sending ? "Wird gesendet …" : "Einreichen"}
             </button>
             <p className="mt-4 text-center text-xs text-white/45">
               Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage genutzt.
