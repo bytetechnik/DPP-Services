@@ -90,7 +90,7 @@ export function Faq() {
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">{t.paragraph}</p>
           <Link
             to="/kontakt"
-            className="bg-gradient-brand shadow-brand mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
+            className="bg-gradient-brand shadow-brand mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-gold-foreground transition-transform duration-300 hover:-translate-y-0.5"
           >
             {t.cta}
           </Link>
@@ -100,7 +100,7 @@ export function Faq() {
           <Accordion type="single" collapsible className="w-full">
             {t.faqs.map((f, i) => (
               <AccordionItem
-                key={f.q}
+                key={i}
                 value={`item-${i}`}
                 className="border-b border-border last:border-b-0"
               >

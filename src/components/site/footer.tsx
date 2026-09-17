@@ -1,5 +1,6 @@
 import { Mail, MapPin, Clock3, ArrowUp, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { OPEN_PRIVACY_SETTINGS_EVENT } from "@/components/site/cookie-banner";
 import { useCopy } from "@/lib/i18n";
 
 
@@ -12,17 +13,16 @@ const copy = {
     nav: [
       { label: "Leistungen", href: "/leistungen" },
       { label: "Über uns", href: "/ueber-uns" },
+      { label: "Karriere", href: "/karriere" },
       { label: "FAQ", href: "/#faq" },
       { label: "Kontakt", href: "/kontakt" },
     ],
     leistungenHeading: "Leistungen",
     leistungen: [
-      "Empfangsdienst",
-      "Hotelrezeption",
-      "Night Audit",
-      "Tagungsservice",
-      "Servicekräfte",
-      "Büro-Empfang",
+      { label: "Empfangsdienst", href: "/leistungen/empfang" },
+      { label: "Night Audit", href: "/leistungen/night-audit" },
+      { label: "Tagungsservice", href: "/leistungen/tagung" },
+      { label: "Büro-Empfang", href: "/leistungen/buero-empfang" },
     ],
     kontaktHeading: "Kontakt",
     region: "Rhein-Main-Gebiet",
@@ -31,6 +31,7 @@ const copy = {
     rights: "Alle Rechte vorbehalten.",
     impressum: "Impressum",
     datenschutz: "Datenschutz",
+    privacySettings: "Datenschutzeinstellungen",
     top: "Nach oben",
     developedBy: "Entwickelt von",
     logoAlt: "DPP Services Logo",
@@ -45,17 +46,16 @@ const copy = {
     nav: [
       { label: "Services", href: "/leistungen" },
       { label: "About us", href: "/ueber-uns" },
+      { label: "Careers", href: "/karriere" },
       { label: "FAQ", href: "/#faq" },
       { label: "Contact", href: "/kontakt" },
     ],
     leistungenHeading: "Services",
     leistungen: [
-      "Reception service",
-      "Hotel front desk",
-      "Night audit",
-      "Conference service",
-      "Service staff",
-      "Office reception",
+      { label: "Reception service", href: "/leistungen/empfang" },
+      { label: "Night audit", href: "/leistungen/night-audit" },
+      { label: "Conference service", href: "/leistungen/tagung" },
+      { label: "Office reception", href: "/leistungen/buero-empfang" },
     ],
     kontaktHeading: "Contact",
     region: "Rhein-Main region",
@@ -64,6 +64,7 @@ const copy = {
     rights: "All rights reserved.",
     impressum: "Legal notice",
     datenschutz: "Privacy policy",
+    privacySettings: "Privacy settings",
     top: "Back to top",
     developedBy: "Developed by",
     logoAlt: "DPP Services logo",
@@ -79,14 +80,16 @@ export function SiteFooter() {
       <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Link to="/" className="flex items-center gap-3">
-              <img
-                src="/Icon.jpeg"
-                alt={t.logoAlt}
-                width={48}
-                height={48}
-                className="h-11 w-11 rounded-lg object-cover"
-              />
+            <Link to="/" className="flex items-center gap-2.5 sm:gap-3">
+              <span className="inline-grid shrink-0 place-items-center rounded-full bg-white p-0.5 shadow-soft ring-1 ring-white/20">
+                <img
+                  src="/logo-mark.png"
+                  alt={t.logoAlt}
+                  width={693}
+                  height={657}
+                  className="h-11 w-auto shrink-0 rounded-full object-contain sm:h-12"
+                />
+              </span>
               <span>
                 <span className="block font-display text-sm font-extrabold tracking-tight text-white">
                   DPP SERVICES
@@ -130,8 +133,13 @@ export function SiteFooter() {
             </h3>
             <ul className="mt-5 space-y-3">
               {t.leistungen.map((l) => (
-                <li key={l} className="text-sm text-white/70">
-                  {l}
+                <li key={l.href}>
+                  <Link
+                    to={l.href}
+                    className="text-sm text-white/70 transition-colors hover:text-white"
+                  >
+                    {l.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -143,7 +151,7 @@ export function SiteFooter() {
             </h3>
             <ul className="mt-5 space-y-4">
               <li className="flex items-start gap-3 text-sm text-white/70">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                 <a
                   href="mailto:info@dpp-services.de"
                   aria-label={t.mailAria}
@@ -153,23 +161,23 @@ export function SiteFooter() {
                 </a>
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                 <a href="tel:+4917670800798" aria-label={t.callAria} className="hover:text-white">
                   +49 176 70800798
                 </a>
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                 {t.region}
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
-                <Clock3 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <Clock3 className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                 {t.hours}
               </li>
             </ul>
             <Link
               to="/kontakt"
-              className="bg-gradient-brand shadow-brand mt-6 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
+              className="bg-gradient-brand shadow-brand mt-6 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-gold-foreground transition-transform duration-300 hover:-translate-y-0.5"
             >
               {t.cta}
             </Link>
@@ -200,6 +208,13 @@ export function SiteFooter() {
             <Link to="/datenschutz" className="text-xs text-white/45 transition-colors hover:text-white">
               {t.datenschutz}
             </Link>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event(OPEN_PRIVACY_SETTINGS_EVENT))}
+              className="text-xs text-white/45 transition-colors hover:text-white"
+            >
+              {t.privacySettings}
+            </button>
             <a
               href="#top"
               aria-label={t.top}

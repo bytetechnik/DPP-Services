@@ -89,7 +89,7 @@ export function Process() {
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="max-w-3xl">
-          <span className="eyebrow text-primary">{t.eyebrow}</span>
+          <span className="eyebrow text-gold">{t.eyebrow}</span>
           <h2 className="mt-4 font-display text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl">
             {t.title}
           </h2>
@@ -103,11 +103,11 @@ export function Process() {
             const Icon = stepIcons[i]!;
             return (
               <RevealItem key={s.step}>
-                <div className="group relative h-full overflow-hidden rounded-2xl border border-white/12 bg-white/5 p-6 backdrop-blur-sm transition-colors duration-500 hover:border-primary/50 hover:bg-white/10">
-                  <span className="font-display text-5xl font-extrabold text-white/10 transition-colors duration-500 group-hover:text-primary/30">
+                <div className="group relative h-full overflow-hidden rounded-2xl border border-white/12 bg-white/5 p-6 backdrop-blur-sm transition-colors duration-500 hover:border-gold/50 hover:bg-white/10">
+                  <span className="font-display text-5xl font-extrabold text-white/10 transition-colors duration-500 group-hover:text-gold/30">
                     {s.step}
                   </span>
-                  <div className="bg-gradient-brand mt-4 grid h-11 w-11 place-items-center rounded-xl text-primary-foreground">
+                  <div className="bg-gradient-brand mt-4 grid h-11 w-11 place-items-center rounded-xl text-gold-foreground">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="mt-4 font-display text-lg font-bold text-white">{s.title}</h3>

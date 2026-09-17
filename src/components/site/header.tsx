@@ -5,10 +5,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useCopy } from "@/lib/i18n";
 import { LanguageSwitcher } from "./language-switcher";
+import { LOGO_INTRO_EVENT, NAV_LOGO_ID, isLogoIntroRunning, type LogoIntroPhase } from "./logo-intro";
 
 const MotionLink = motion.create(Link);
 
-const hrefs = ["/", "/leistungen", "/ueber-uns", "/#faq"];
+const hrefs = ["/", "/leistungen", "/ueber-uns", "/karriere", "/#faq"];
 
 
 const copy = {
@@ -16,7 +17,7 @@ const copy = {
     tagline: "Empfang & Hotelservices",
     logoAlt: "DPP Services Logo",
     callAria: "DPP Services anrufen",
-    nav: ["Startseite", "Leistungen", "Über uns", "FAQ"],
+    nav: ["Startseite", "Leistungen", "Über uns", "Karriere", "FAQ"],
     contact: "Kontakt",
     contactLong: "Kontakt",
     menuOpen: "Menü öffnen",
@@ -26,7 +27,7 @@ const copy = {
     tagline: "Reception & Hotel Services",
     logoAlt: "DPP Services logo",
     callAria: "Call DPP Services",
-    nav: ["Home", "Services", "About us", "FAQ"],
+    nav: ["Home", "Services", "About us", "Careers", "FAQ"],
     contact: "Contact",
     contactLong: "Contact us",
     menuOpen: "Open menu",
@@ -43,9 +44,24 @@ export function SiteHeader() {
   const navigate = useNavigate();
   const { pathname, hash } = useLocation();
   const [mounted, setMounted] = useState(false);
+  const [logoIntroPhase, setLogoIntroPhase] = useState<LogoIntroPhase | null>(() =>
+    isLogoIntroRunning() ? "active" : null,
+  );
   useEffect(() => setMounted(true), []);
   const activeHash = mounted ? hash : "";
 
+  useEffect(() => {
+    const onIntro = (e: Event) => {
+      const phase = (e as CustomEvent<LogoIntroPhase>).detail;
+      setLogoIntroPhase(phase);
+    };
+    window.addEventListener(LOGO_INTRO_EVENT, onIntro);
+    return () => window.removeEventListener(LOGO_INTRO_EVENT, onIntro);
+  }, []);
+
+  const navLogoHidden = logoIntroPhase === "active" || logoIntroPhase === "flying";
+  const navBrandHidden = logoIntroPhase === "active" || logoIntroPhase === "flying";
+  const navChromeHidden = logoIntroPhase === "active" || logoIntroPhase === "flying";
   const isActive = (href: string) => {
     const currentHash = activeHash.replace(/^#/, "");
     if (href === "/") return pathname === "/" && !currentHash;
@@ -103,16 +119,31 @@ export function SiteHeader() {
         )}
       />
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-4 px-4 sm:h-20 sm:px-6 lg:px-8">
-        <Link to="/" onClick={onHomeClick} className="flex min-w-0 items-center gap-3">
-          <img
-            src="/Icon.jpeg"
-            alt={t.logoAlt}
-            width={48}
-            height={48}
-            className="h-10 w-10 shrink-0 rounded-lg object-cover sm:h-12 sm:w-12"
-          />
-          <span className="hidden min-w-0 sm:block">
-
+        <Link to="/" onClick={onHomeClick} className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+          <motion.span
+            id={NAV_LOGO_ID}
+            initial={false}
+            animate={{ opacity: navLogoHidden ? 0 : 1, scale: navLogoHidden ? 0.92 : 1 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className={cn(
+              "inline-grid shrink-0 place-items-center rounded-full bg-white p-0.5 shadow-soft",
+              scrolled ? "ring-1 ring-border/70" : "ring-1 ring-white/40",
+            )}
+          >
+            <img
+              src="/logo-mark.png"
+              alt={t.logoAlt}
+              width={693}
+              height={657}
+              className="h-11 w-auto shrink-0 rounded-full object-contain sm:h-12"
+            />
+          </motion.span>
+          <motion.span
+            initial={false}
+            animate={{ opacity: navBrandHidden ? 0 : 1, x: navBrandHidden ? -6 : 0 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: navBrandHidden ? 0 : 0.12 }}
+            className="hidden min-w-0 sm:block"
+          >
             <span
               className={cn(
                 "block truncate font-display text-sm leading-tight font-extrabold tracking-tight sm:text-base",
@@ -129,10 +160,18 @@ export function SiteHeader() {
             >
               {t.tagline}
             </span>
-          </span>
+          </motion.span>
         </Link>
 
-        <nav className="ml-auto hidden items-center gap-8 lg:flex">
+        <motion.nav
+          initial={false}
+          animate={{ opacity: navChromeHidden ? 0 : 1, y: navChromeHidden ? -6 : 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: navChromeHidden ? 0 : 0.18 }}
+          className={cn(
+            "ml-auto hidden items-center gap-8 lg:flex",
+            navChromeHidden && "pointer-events-none",
+          )}
+        >
           {links.map((l) => {
             const active = isActive(l.href);
             const isHash = l.href.startsWith("/#");
@@ -146,8 +185,8 @@ export function SiteHeader() {
                   "underline-sweep relative text-sm font-semibold transition-colors",
                   active
                     ? scrolled
-                      ? "text-primary"
-                      : "text-white"
+                      ? "text-gold-deep"
+                      : "text-gold"
                     : scrolled
                       ? "text-ink-soft hover:text-ink"
                       : "text-white/85 hover:text-white",
@@ -157,10 +196,7 @@ export function SiteHeader() {
                 {active && (
                   <motion.span
                     layoutId="nav-active"
-                    className={cn(
-                      "absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full",
-                      scrolled ? "bg-gradient-brand" : "bg-white",
-                    )}
+                    className="bg-gradient-brand absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full"
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   />
                 )}
@@ -171,31 +207,43 @@ export function SiteHeader() {
 
           <Link
             to="/kontakt"
-            className="bg-gradient-brand shadow-brand inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
+            className="bg-gradient-brand shadow-brand inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-gold-foreground transition-transform duration-300 hover:-translate-y-0.5"
           >
             {t.contact}
 
           </Link>
           <LanguageSwitcher id="desktop" variant={scrolled ? "dark" : "light"} />
-        </nav>
+        </motion.nav>
 
-        <div className="ml-auto flex items-center gap-2 lg:hidden">
+        <motion.div
+          initial={false}
+          animate={{ opacity: navChromeHidden ? 0 : 1 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: navChromeHidden ? 0 : 0.2 }}
+          className={cn(
+            "ml-auto flex items-center gap-2 lg:hidden",
+            navChromeHidden && "pointer-events-none",
+          )}
+        >
           <LanguageSwitcher id="mobile" variant={scrolled ? "dark" : "light"} />
-        </div>
+        </motion.div>
 
-        <button
+        <motion.button
           type="button"
           aria-label={open ? t.menuClose : t.menuOpen}
           onClick={() => setOpen((v) => !v)}
+          initial={false}
+          animate={{ opacity: navChromeHidden ? 0 : 1 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: navChromeHidden ? 0 : 0.2 }}
           className={cn(
             "grid h-11 w-11 shrink-0 place-items-center rounded-full border transition-colors lg:hidden",
+            navChromeHidden && "pointer-events-none",
             scrolled
               ? "border-border bg-card text-ink"
               : "border-white/25 bg-white/10 text-white backdrop-blur",
           )}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        </motion.button>
       </div>
 
       <AnimatePresence>
@@ -278,7 +326,7 @@ export function SiteHeader() {
                   <Link
                     to="/kontakt"
                     onClick={() => setOpen(false)}
-                    className="bg-gradient-brand shadow-brand flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-bold text-primary-foreground"
+                    className="bg-gradient-brand shadow-brand flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-bold text-gold-foreground"
                   >
                     {t.contactLong}
                   </Link>

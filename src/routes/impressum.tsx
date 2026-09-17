@@ -2,10 +2,6 @@ import { LegalLayout, LegalSection } from "@/components/site/legal-layout";
 import { useCopy } from "@/lib/i18n";
 import { PageMeta } from "@/lib/page-meta";
 
-const title = "Impressum | DPP Services GbR";
-const description =
-  "Impressum der DPP Services GbR, Am Kronberger Hang 2, 65824 Schwalbach am Taunus – Angaben gemäß § 5 TMG, Kontakt und Haftungshinweise.";
-
 const copy = {
   de: {
     title: "Impressum",
@@ -28,6 +24,10 @@ const copy = {
     telefonLabel: "Telefon:",
     emailLabel: "E-Mail:",
     websiteLabel: "Website: www.dpp-services.de",
+    country: "Deutschland",
+    metaTitle: "Impressum | DPP Services GbR",
+    metaDescription:
+      "Impressum der DPP Services GbR, Am Kronberger Hang 2, 65824 Schwalbach am Taunus – Angaben gemäß § 5 TMG, Kontakt und Haftungshinweise.",
   },
   en: {
     title: "Legal Notice",
@@ -50,6 +50,10 @@ const copy = {
     telefonLabel: "Phone:",
     emailLabel: "Email:",
     websiteLabel: "Website: www.dpp-services.de",
+    country: "Germany",
+    metaTitle: "Legal Notice | DPP Services GbR",
+    metaDescription:
+      "Legal notice for DPP Services GbR, Am Kronberger Hang 2, 65824 Schwalbach am Taunus – information pursuant to § 5 TMG, contact and liability notices.",
   },
 } as const;
 
@@ -57,7 +61,7 @@ export function ImpressumPage() {
   const t = useCopy(copy);
   return (
     <LegalLayout title={t.title} intro={t.intro}>
-      <PageMeta title={title} description={description} path="/impressum" />
+      <PageMeta title={t.metaTitle} description={t.metaDescription} path="/impressum" />
       <LegalSection heading={t.anbieter}>
         <p>
           DPP Services GbR
@@ -66,7 +70,7 @@ export function ImpressumPage() {
           <br />
           65824 Schwalbach am Taunus
           <br />
-          Deutschland
+          {t.country}
         </p>
       </LegalSection>
 

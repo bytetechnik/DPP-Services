@@ -128,10 +128,10 @@ export function About() {
         </Reveal>
 
         <RevealGroup className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
-          {values.map((v) => (
-            <RevealItem key={v.title}>
+          {values.map((v, i) => (
+            <RevealItem key={i}>
               <div className="group h-full rounded-2xl border border-border bg-card p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-soft">
-                <div className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-primary-deep transition-colors duration-500 group-hover:bg-gradient-brand group-hover:text-primary-foreground">
+                <div className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-primary-deep transition-colors duration-500 group-hover:bg-gradient-brand group-hover:text-gold-foreground">
                   <v.icon className="h-5 w-5" />
                 </div>
                 <p className="mt-4 font-display text-base font-bold text-ink">{v.title}</p>

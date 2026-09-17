@@ -8,51 +8,14 @@ import { useCopy } from "@/lib/i18n";
 import { PageMeta } from "@/lib/page-meta";
 import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
 
-const title = "Über uns | DPP Services – Empfang & Hotelservices";
-const description =
-  "Wer wir sind: DPP Services steht für Gastfreundschaft, Diskretion und Verlässlichkeit am Empfang – mit geschultem Personal für Hotels und Unternehmen im Rhein-Main-Gebiet.";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "LocalBusiness",
-      "@id": `${SITE_ORIGIN}/#business`,
-      name: "DPP Services GbR",
-      url: `${SITE_ORIGIN}/`,
-      logo: SITE_LOGO,
-      image: SITE_LOGO,
-      telephone: "+4917670800798",
-      email: "info@dpp-services.de",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Am Kronberger Hang 2",
-        postalCode: "65824",
-        addressLocality: "Schwalbach am Taunus",
-        addressCountry: "DE",
-      },
-      areaServed: "Rhein-Main-Gebiet",
-      vatID: "DE460265715",
-    },
-    {
-      "@type": "AboutPage",
-      name: title,
-      description,
-      url: `${SITE_ORIGIN}/ueber-uns`,
-      mainEntity: { "@id": `${SITE_ORIGIN}/#business` },
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Startseite", item: `${SITE_ORIGIN}/` },
-        { "@type": "ListItem", position: 2, name: "Über uns", item: `${SITE_ORIGIN}/ueber-uns` },
-      ],
-    },
-  ],
-};
-
 const copy = {
   de: {
+    metaTitle: "Über uns | DPP Services – Empfang & Hotelservices",
+    metaDescription:
+      "Wer wir sind: DPP Services steht für Gastfreundschaft, Diskretion und Verlässlichkeit am Empfang – mit geschultem Personal für Hotels und Unternehmen im Rhein-Main-Gebiet.",
+    areaServed: "Rhein-Main-Gebiet",
+    breadcrumbHome: "Startseite",
+    breadcrumbPage: "Über uns",
     eyebrowHero: "Über uns",
     heroTitle: "Gastfreundschaft ist unser Handwerk",
     heroText:
@@ -94,6 +57,12 @@ const copy = {
     ],
   },
   en: {
+    metaTitle: "About us | DPP Services – Reception & Hotel Services",
+    metaDescription:
+      "Who we are: DPP Services stands for hospitality, discretion and reliability at the front desk – with trained staff for hotels and companies in the Rhein-Main region.",
+    areaServed: "Rhein-Main region",
+    breadcrumbHome: "Home",
+    breadcrumbPage: "About us",
     eyebrowHero: "About us",
     heroTitle: "Hospitality is our craft",
     heroText:
@@ -138,9 +107,48 @@ const copy = {
 
 export function UeberUnsPage() {
   const t = useCopy(copy);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": `${SITE_ORIGIN}/#business`,
+        name: "DPP Services GbR",
+        url: `${SITE_ORIGIN}/`,
+        logo: SITE_LOGO,
+        image: SITE_LOGO,
+        telephone: "+4917670800798",
+        email: "info@dpp-services.de",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Am Kronberger Hang 2",
+          postalCode: "65824",
+          addressLocality: "Schwalbach am Taunus",
+          addressCountry: "DE",
+        },
+        areaServed: t.areaServed,
+        vatID: "DE460265715",
+      },
+      {
+        "@type": "AboutPage",
+        name: t.metaTitle,
+        description: t.metaDescription,
+        url: `${SITE_ORIGIN}/ueber-uns`,
+        mainEntity: { "@id": `${SITE_ORIGIN}/#business` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: t.breadcrumbHome, item: `${SITE_ORIGIN}/` },
+          { "@type": "ListItem", position: 2, name: t.breadcrumbPage, item: `${SITE_ORIGIN}/ueber-uns` },
+        ],
+      },
+    ],
+  };
+
   return (
     <div id="top" className="min-h-screen bg-background">
-      <PageMeta title={title} description={description} path="/ueber-uns" jsonLd={jsonLd} />
+      <PageMeta title={t.metaTitle} description={t.metaDescription} path="/ueber-uns" jsonLd={jsonLd} />
       <SiteHeader />
       <main>
         <section className="relative overflow-hidden bg-ink pt-28 pb-16 sm:pt-36 sm:pb-24">
@@ -148,7 +156,7 @@ export function UeberUnsPage() {
           <div className="grid-lines absolute inset-0 opacity-20" />
           <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
             <Reveal className="max-w-3xl">
-              <span className="eyebrow text-primary">{t.eyebrowHero}</span>
+              <span className="eyebrow text-gold">{t.eyebrowHero}</span>
               <h1 className="mt-4 font-display text-3xl font-extrabold text-white sm:text-5xl lg:text-6xl">
                 {t.heroTitle}
               </h1>
@@ -157,7 +165,7 @@ export function UeberUnsPage() {
               </p>
               <Link
                 to="/kontakt"
-                className="bg-gradient-brand shadow-brand mt-8 inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
+                className="bg-gradient-brand shadow-brand mt-8 inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-gold-foreground transition-transform duration-300 hover:-translate-y-0.5"
               >
                 {t.heroCta}
               </Link>
@@ -177,8 +185,8 @@ export function UeberUnsPage() {
             </Reveal>
 
             <RevealGroup className="mt-12 grid gap-6 md:grid-cols-3">
-              {t.milestones.map((m) => (
-                <RevealItem key={m.title}>
+              {t.milestones.map((m, i) => (
+                <RevealItem key={i}>
                   <div className="card-elevated h-full p-7">
                     <p className="text-[11px] font-bold tracking-[0.18em] text-primary uppercase">
                       {m.label}
@@ -192,7 +200,7 @@ export function UeberUnsPage() {
 
             <Reveal delay={0.1}>
               <figure className="bg-gradient-ink mt-12 rounded-3xl px-6 py-10 sm:px-12 sm:py-14">
-                <Quote className="h-8 w-8 text-primary" />
+                <Quote className="h-8 w-8 text-gold" />
                 <blockquote className="mt-5 max-w-3xl font-display text-xl leading-snug font-bold text-white sm:text-2xl">
                   {t.quote}
                 </blockquote>

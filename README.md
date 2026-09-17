@@ -3,17 +3,15 @@
 https://www.dpp-services.de/
 this is the old website link. Redesign this full websies with more content. Make it modern animated and professional. I have attached the logo as well. Use the logo color for the website. Some color hints for the website color.
 
-Black / Dark text: #202020 — RGB 32, 32, 32
+Navy (primary): #0A2147 — logo ring and DPP initials
 
-Bright blue: approximately #1092DD — RGB 16, 146, 221
+Premium gold (accent): #CAA652 — logo borders and SERVICES lettering
 
-Medium blue: approximately #147CB9 — RGB 20, 124, 185
+Ink / dark surfaces: near-navy charcoal aligned with the logo
 
 White background: #FFFFFF
 
-The blue appears to be a gradient, transitioning roughly from #1092DD → #147CB9.
-
-For a modern redesign, I’d recommend keeping #1092DD + #202020 as the main brand colors.
+Brand CTAs use a gold gradient (#CAA652 → #B8923F); navy carries structure (headers, dark bands, links).
 
 Make the website responsive for mobile, web and tablet. 
 

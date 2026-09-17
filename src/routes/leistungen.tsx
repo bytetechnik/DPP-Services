@@ -8,52 +8,16 @@ import { useCopy } from "@/lib/i18n";
 import { PageMeta } from "@/lib/page-meta";
 import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
 
-const title = "Leistungen | Empfangsdienst, Night Audit & Hotelservice";
-const description =
-  "Alle Leistungen von DPP Services im Detail: Empfangsdienst und Hotelrezeption, Night Audit, Tagungs- und Bankettservice sowie Büro-Empfang im Rhein-Main-Gebiet.";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "LocalBusiness",
-      "@id": `${SITE_ORIGIN}/#business`,
-      name: "DPP Services GbR",
-      url: `${SITE_ORIGIN}/`,
-      logo: SITE_LOGO,
-      image: SITE_LOGO,
-      telephone: "+4917670800798",
-      email: "info@dpp-services.de",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Am Kronberger Hang 2",
-        postalCode: "65824",
-        addressLocality: "Schwalbach am Taunus",
-        addressCountry: "DE",
-      },
-      areaServed: "Rhein-Main-Gebiet",
-      vatID: "DE460265715",
-    },
-    {
-      "@type": "Service",
-      name: "Empfangs- und Hotelservices",
-      description,
-      serviceType: "Empfangsdienst, Hotelrezeption, Night Audit, Tagungsservice, Büro-Empfang",
-      provider: { "@id": `${SITE_ORIGIN}/#business` },
-      areaServed: "Rhein-Main-Gebiet",
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Startseite", item: `${SITE_ORIGIN}/` },
-        { "@type": "ListItem", position: 2, name: "Leistungen", item: `${SITE_ORIGIN}/leistungen` },
-      ],
-    },
-  ],
-};
-
 const copy = {
   de: {
+    metaTitle: "Leistungen | Empfangsdienst, Night Audit & Hotelservice",
+    metaDescription:
+      "Alle Leistungen von DPP Services im Detail: Empfangsdienst und Hotelrezeption, Night Audit, Tagungs- und Bankettservice sowie Büro-Empfang im Rhein-Main-Gebiet.",
+    areaServed: "Rhein-Main-Gebiet",
+    serviceName: "Empfangs- und Hotelservices",
+    serviceType: "Empfangsdienst, Hotelrezeption, Night Audit, Tagungsservice, Büro-Empfang",
+    breadcrumbHome: "Startseite",
+    breadcrumbPage: "Leistungen",
     eyebrowHero: "Leistungen",
     heroTitle: "Empfangs- und Hotelservices, die Ihr Haus tragen",
     heroText:
@@ -92,6 +56,14 @@ const copy = {
     includedCta: "Angebot erhalten",
   },
   en: {
+    metaTitle: "Services | Reception, Night Audit & Hotel Service",
+    metaDescription:
+      "All DPP Services offerings in detail: reception and hotel front desk, night audit, conference and banquet service, and office reception in the Rhein-Main region.",
+    areaServed: "Rhein-Main region",
+    serviceName: "Reception and hotel services",
+    serviceType: "Reception, hotel front desk, night audit, conference service, office reception",
+    breadcrumbHome: "Home",
+    breadcrumbPage: "Services",
     eyebrowHero: "Services",
     heroTitle: "Reception and hotel services that carry your property",
     heroText:
@@ -133,9 +105,49 @@ const copy = {
 
 export function LeistungenPage() {
   const t = useCopy(copy);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": `${SITE_ORIGIN}/#business`,
+        name: "DPP Services GbR",
+        url: `${SITE_ORIGIN}/`,
+        logo: SITE_LOGO,
+        image: SITE_LOGO,
+        telephone: "+4917670800798",
+        email: "info@dpp-services.de",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Am Kronberger Hang 2",
+          postalCode: "65824",
+          addressLocality: "Schwalbach am Taunus",
+          addressCountry: "DE",
+        },
+        areaServed: t.areaServed,
+        vatID: "DE460265715",
+      },
+      {
+        "@type": "Service",
+        name: t.serviceName,
+        description: t.metaDescription,
+        serviceType: t.serviceType,
+        provider: { "@id": `${SITE_ORIGIN}/#business` },
+        areaServed: t.areaServed,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: t.breadcrumbHome, item: `${SITE_ORIGIN}/` },
+          { "@type": "ListItem", position: 2, name: t.breadcrumbPage, item: `${SITE_ORIGIN}/leistungen` },
+        ],
+      },
+    ],
+  };
+
   return (
     <div id="top" className="min-h-screen bg-background">
-      <PageMeta title={title} description={description} path="/leistungen" jsonLd={jsonLd} />
+      <PageMeta title={t.metaTitle} description={t.metaDescription} path="/leistungen" jsonLd={jsonLd} />
       <SiteHeader />
       <main>
         <section className="relative overflow-hidden bg-ink pt-28 pb-16 sm:pt-36 sm:pb-24">
@@ -143,7 +155,7 @@ export function LeistungenPage() {
           <div className="grid-lines absolute inset-0 opacity-20" />
           <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
             <Reveal className="max-w-3xl">
-              <span className="eyebrow text-primary">{t.eyebrowHero}</span>
+              <span className="eyebrow text-gold">{t.eyebrowHero}</span>
               <h1 className="mt-4 font-display text-3xl font-extrabold text-white sm:text-5xl lg:text-6xl">
                 {t.heroTitle}
               </h1>
@@ -152,7 +164,7 @@ export function LeistungenPage() {
               </p>
               <Link
                 to="/kontakt"
-                className="bg-gradient-brand shadow-brand mt-8 inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
+                className="bg-gradient-brand shadow-brand mt-8 inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-gold-foreground transition-transform duration-300 hover:-translate-y-0.5"
               >
                 {t.heroCta}
               </Link>
@@ -175,10 +187,10 @@ export function LeistungenPage() {
             </Reveal>
 
             <RevealGroup className="mt-12 grid gap-6 md:grid-cols-3">
-              {t.models.map((m) => (
-                <RevealItem key={m.title}>
+              {t.models.map((m, i) => (
+                <RevealItem key={i}>
                   <div className="card-elevated h-full p-7">
-                    <span className="bg-gradient-brand shadow-brand grid h-11 w-11 place-items-center rounded-xl text-primary-foreground">
+                    <span className="bg-gradient-brand shadow-brand grid h-11 w-11 place-items-center rounded-xl text-gold-foreground">
                       <m.icon className="h-5 w-5" />
                     </span>
                     <h3 className="mt-5 font-display text-lg font-bold text-ink">{m.title}</h3>
@@ -205,7 +217,7 @@ export function LeistungenPage() {
                 </div>
                 <Link
                   to="/kontakt"
-                  className="bg-gradient-brand shadow-brand inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
+                  className="bg-gradient-brand shadow-brand inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-gold-foreground transition-transform duration-300 hover:-translate-y-0.5"
                 >
                   {t.includedCta}
                 </Link>

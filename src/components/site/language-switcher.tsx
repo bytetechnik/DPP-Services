@@ -57,7 +57,7 @@ export function LanguageSwitcher({
             className={cn(
               "relative rounded-full px-2.5 py-1 text-[11px] font-bold tracking-[0.12em] transition-colors duration-300",
               active
-                ? "text-primary-foreground"
+                ? "text-gold-foreground"
                 : variant === "light"
                   ? "text-white/65 hover:text-white"
                   : "text-ink/55 hover:text-ink",

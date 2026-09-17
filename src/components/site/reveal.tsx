@@ -1,6 +1,8 @@
 import { motion, type Variants } from "motion/react";
 import type { ReactNode } from "react";
 
+import { useLang } from "@/lib/i18n";
+
 const easing = [0.16, 1, 0.3, 1] as const;
 
 const variants: Variants = {
@@ -17,8 +19,10 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
+  const { lang } = useLang();
   return (
     <motion.div
+      key={lang}
       className={className}
       initial="hidden"
       whileInView="show"
@@ -40,8 +44,10 @@ export function RevealGroup({
   className?: string;
   stagger?: number;
 }) {
+  const { lang } = useLang();
   return (
     <motion.div
+      key={lang}
       className={className}
       initial="hidden"
       whileInView="show"

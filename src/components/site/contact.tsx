@@ -40,6 +40,7 @@ const copy = {
     sending: "Wird gesendet …",
     submit: "Einreichen",
     disclaimer: "Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage genutzt.",
+    sentSuccess: "Nachricht gesendet",
   },
   en: {
     eyebrow: "Contact",
@@ -73,6 +74,7 @@ const copy = {
     sending: "Sending …",
     submit: "Submit",
     disclaimer: "Your information will only be used to process your inquiry.",
+    sentSuccess: "Message sent",
   },
 };
 
@@ -100,7 +102,7 @@ export function Contact() {
 
       <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <Reveal>
-          <span className="eyebrow text-primary">{t.eyebrow}</span>
+          <span className="eyebrow text-gold">{t.eyebrow}</span>
           <motion.h2
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -121,13 +123,13 @@ export function Contact() {
           <div className="mt-10 space-y-5">
             {contactItems.map((c, i) => (
               <motion.div
-                key={c.label}
+                key={i}
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.25 + i * 0.08 }}
                 className="group flex items-start gap-4"
               >
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-white/12 bg-white/5 text-primary transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-primary/40 group-hover:bg-primary/10">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-white/12 bg-white/5 text-gold transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-gold/40 group-hover:bg-gold/10">
                   <c.icon className="h-5 w-5" />
                 </span>
                 <div className="min-w-0">
@@ -137,7 +139,7 @@ export function Contact() {
                   {c.href ? (
                     <a
                       href={c.href}
-                      className="font-display text-base font-semibold break-words text-white transition-colors duration-300 hover:text-primary"
+                      className="font-display text-base font-semibold break-words text-white transition-colors duration-300 hover:text-gold"
                     >
                       {c.value}
                     </a>
@@ -154,7 +156,7 @@ export function Contact() {
         <Reveal delay={0.1}>
           {sent ? (
             <div className="grid min-h-[320px] place-items-center rounded-3xl border border-white/12 bg-white/5 p-6 backdrop-blur-xl sm:p-8">
-              <p className="font-display text-2xl font-extrabold text-white">Form send</p>
+              <p className="font-display text-2xl font-extrabold text-white">{t.sentSuccess}</p>
             </div>
           ) : (
           <form
@@ -222,7 +224,7 @@ export function Contact() {
             <button
               type="submit"
               disabled={sending}
-              className="bg-gradient-brand shadow-brand mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-60"
+              className="bg-gradient-brand shadow-brand mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-bold text-gold-foreground transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-60"
             >
               <Send className="h-4 w-4" />
               {sending ? t.sending : t.submit}

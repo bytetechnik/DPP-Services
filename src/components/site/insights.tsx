@@ -7,6 +7,8 @@ const copy = {
   de: {
     testimonialsEyebrow: "Stimmen unserer Kunden",
     testimonialsTitle: "Vertrauen, das im Alltag entsteht",
+    openQuote: "„",
+    closeQuote: "“",
     testimonials: [
       {
         quote:
@@ -56,6 +58,8 @@ const copy = {
   en: {
     testimonialsEyebrow: "What our clients say",
     testimonialsTitle: "Trust built through everyday reliability",
+    openQuote: "“",
+    closeQuote: "”",
     testimonials: [
       {
         quote:
@@ -117,12 +121,14 @@ export function Insights() {
         </Reveal>
 
         <RevealGroup className="mt-12 grid gap-6 lg:grid-cols-3">
-          {t.testimonials.map((tItem) => (
-            <RevealItem key={tItem.name + tItem.role}>
+          {t.testimonials.map((tItem, i) => (
+            <RevealItem key={i}>
               <figure className="card-elevated h-full p-7 sm:p-8">
                 <Quote className="h-8 w-8 text-primary/35" />
                 <blockquote className="mt-4 text-base leading-relaxed text-ink-soft">
-                  „{tItem.quote}“
+                  {t.openQuote}
+                  {tItem.quote}
+                  {t.closeQuote}
                 </blockquote>
                 <figcaption className="mt-6 border-t border-border pt-5">
                   <p className="font-display text-sm font-bold text-ink">{tItem.name}</p>
@@ -144,8 +150,8 @@ export function Insights() {
         </Reveal>
 
         <RevealGroup className="mt-12 grid gap-6 lg:grid-cols-3">
-          {t.posts.map((p) => (
-            <RevealItem key={p.title}>
+          {t.posts.map((p, i) => (
+            <RevealItem key={i}>
               <article className="card-elevated group flex h-full flex-col p-7 sm:p-8">
                 <div className="flex items-center gap-3">
                   <span className="rounded-full bg-accent px-3 py-1 text-[11px] font-bold tracking-[0.14em] text-primary-deep uppercase">

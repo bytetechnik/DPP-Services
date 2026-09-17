@@ -9,11 +9,13 @@ const copy = {
     tagline: "Empfang & Hotelservices",
     backHome: "Zur Startseite",
     eyebrow: "Rechtliches",
+    logoAlt: "DPP Services Logo",
   },
   en: {
     tagline: "Reception & Hotel Services",
     backHome: "Back to homepage",
     eyebrow: "Legal",
+    logoAlt: "DPP Services logo",
   },
 } as const;
 
@@ -32,13 +34,15 @@ export function LegalLayout({
       <header className="border-b border-border/70 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-4 px-4 sm:h-20 sm:px-6 lg:px-8">
           <Link to="/" className="flex min-w-0 items-center gap-3">
-            <img
-              src="/Icon.jpeg"
-              alt="DPP Services Logo"
-              width={48}
-              height={48}
-              className="h-10 w-10 shrink-0 rounded-lg object-cover sm:h-11 sm:w-11"
-            />
+            <span className="inline-grid shrink-0 place-items-center rounded-full bg-white p-[2px] shadow-soft ring-1 ring-border/70">
+              <img
+                src="/logo-mark.png"
+                alt={t.logoAlt}
+                width={48}
+                height={48}
+                className="h-9 w-9 shrink-0 rounded-full object-cover sm:h-10 sm:w-10"
+              />
+            </span>
             <span className="min-w-0">
               <span className="block truncate font-display text-sm leading-tight font-extrabold tracking-tight text-ink sm:text-base">
                 DPP SERVICES
