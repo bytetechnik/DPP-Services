@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCopy } from "@/lib/i18n";
+import { isPrerenderDocument } from "@/lib/site";
 
 export const NAV_LOGO_ID = "nav-logo-mark";
 export const LOGO_INTRO_EVENT = "dpp-logo-intro";
@@ -44,6 +45,7 @@ export function LogoIntro() {
 
   const [active, setActive] = useState(() => {
     if (typeof window === "undefined") return false;
+    if (isPrerenderDocument()) return false;
     if (splashShownThisDocument) return false;
     splashShownThisDocument = true;
     introRunning = true;

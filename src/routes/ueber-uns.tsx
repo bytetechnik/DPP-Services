@@ -6,20 +6,19 @@ import { SiteFooter } from "@/components/site/footer";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/reveal";
 import { useCopy } from "@/lib/i18n";
 import { PageMeta } from "@/lib/page-meta";
-import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
+import { breadcrumbList, BUSINESS_ID, professionalServiceSchema, SITE_ORIGIN } from "@/lib/site";
 
 const copy = {
   de: {
-    metaTitle: "Über uns | DPP Services – Empfang & Hotelservices",
+    metaTitle: "Über uns | Empfangsdienst Frankfurt | DPP Services",
     metaDescription:
-      "Wer wir sind: DPP Services steht für Gastfreundschaft, Diskretion und Verlässlichkeit am Empfang – mit geschultem Personal für Hotels und Unternehmen im Rhein-Main-Gebiet.",
-    areaServed: "Rhein-Main-Gebiet",
+      "DPP Services GbR in Schwalbach am Taunus stellt geschultes Empfangs- und Hotelpersonal für Frankfurt und das Rhein-Main-Gebiet.",
     breadcrumbHome: "Startseite",
     breadcrumbPage: "Über uns",
     eyebrowHero: "Über uns",
     heroTitle: "Gastfreundschaft ist unser Handwerk",
     heroText:
-      "DPP Services ist ein Dienstleister für Empfangs- und Hotelservices im Rhein-Main-Gebiet. Wir stehen für herzliche Gästebetreuung, absolute Diskretion und Personal, auf das sich Ihr Haus verlassen kann.",
+      "DPP Services GbR sitzt in Schwalbach am Taunus und stellt Empfangs- und Hotelpersonal für Frankfurt und das Rhein-Main-Gebiet. Wir stehen für herzliche Gästebetreuung, Diskretion und Personal, auf das sich Ihr Haus verlassen kann.",
     heroCta: "Kennenlernen",
     eyebrowHaltung: "Haltung",
     haltungTitle: "Woran Sie uns erkennen",
@@ -44,29 +43,29 @@ const copy = {
       "„Wir bereiten jedem Gast ein herzliches Willkommen – und geben unseren Kunden die Sicherheit, dass der Empfang immer besetzt ist.“",
     quoteCaption: "DPP Services · Empfang & Hotelservices",
     einsatzgebiet: "Einsatzgebiet",
-    einsatzgebietTitle: "Im gesamten Rhein-Main-Gebiet für Sie im Einsatz",
+    einsatzgebietTitle: "Frankfurt und das Rhein-Main-Gebiet",
     regions: [
-      "Frankfurt am Main",
-      "Wiesbaden",
-      "Mainz",
-      "Darmstadt",
-      "Offenbach",
-      "Hanau",
-      "Bad Homburg",
-      "Rüsselsheim",
+      { label: "Frankfurt am Main", href: "/einsatzgebiet/frankfurt" },
+      { label: "Flughafen Frankfurt", href: "/einsatzgebiet/flughafen-frankfurt" },
+      { label: "Offenbach", href: "/einsatzgebiet/offenbach" },
+      { label: "Taunus", href: "/einsatzgebiet/taunus" },
+      { label: "Wiesbaden", href: "/einsatzgebiet/wiesbaden" },
+      { label: "Mainz", href: "/einsatzgebiet/mainz" },
+      { label: "Darmstadt", href: "/einsatzgebiet/darmstadt" },
+      { label: "Neu-Isenburg", href: "/einsatzgebiet/neu-isenburg" },
+      { label: "Hanau", href: "/einsatzgebiet/hanau" },
     ],
   },
   en: {
-    metaTitle: "About us | DPP Services – Reception & Hotel Services",
+    metaTitle: "About us | Reception staff Frankfurt | DPP Services",
     metaDescription:
-      "Who we are: DPP Services stands for hospitality, discretion and reliability at the front desk – with trained staff for hotels and companies in the Rhein-Main region.",
-    areaServed: "Rhein-Main region",
+      "DPP Services GbR in Schwalbach am Taunus provides trained reception and hotel staff for Frankfurt and the Rhein-Main region.",
     breadcrumbHome: "Home",
     breadcrumbPage: "About us",
     eyebrowHero: "About us",
     heroTitle: "Hospitality is our craft",
     heroText:
-      "DPP Services provides reception and hotel services throughout the Rhein-Main region. We stand for warm guest care, absolute discretion, and staff your property can rely on.",
+      "DPP Services GbR is based in Schwalbach am Taunus and provides reception and hotel staff for Frankfurt and the Rhein-Main region. We stand for warm guest care, discretion, and people your property can rely on.",
     heroCta: "Get to know us",
     eyebrowHaltung: "Our approach",
     haltungTitle: "What sets us apart",
@@ -91,16 +90,17 @@ const copy = {
       "\u201cWe give every guest a warm welcome – and give our clients the confidence that reception is always staffed.\u201d",
     quoteCaption: "DPP Services · Reception & Hotel Services",
     einsatzgebiet: "Coverage area",
-    einsatzgebietTitle: "Active across the entire Rhein-Main region",
+    einsatzgebietTitle: "Frankfurt and the Rhein-Main region",
     regions: [
-      "Frankfurt am Main",
-      "Wiesbaden",
-      "Mainz",
-      "Darmstadt",
-      "Offenbach",
-      "Hanau",
-      "Bad Homburg",
-      "Rüsselsheim",
+      { label: "Frankfurt am Main", href: "/einsatzgebiet/frankfurt" },
+      { label: "Frankfurt Airport", href: "/einsatzgebiet/flughafen-frankfurt" },
+      { label: "Offenbach", href: "/einsatzgebiet/offenbach" },
+      { label: "Taunus", href: "/einsatzgebiet/taunus" },
+      { label: "Wiesbaden", href: "/einsatzgebiet/wiesbaden" },
+      { label: "Mainz", href: "/einsatzgebiet/mainz" },
+      { label: "Darmstadt", href: "/einsatzgebiet/darmstadt" },
+      { label: "Neu-Isenburg", href: "/einsatzgebiet/neu-isenburg" },
+      { label: "Hanau", href: "/einsatzgebiet/hanau" },
     ],
   },
 };
@@ -110,39 +110,18 @@ export function UeberUnsPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "LocalBusiness",
-        "@id": `${SITE_ORIGIN}/#business`,
-        name: "DPP Services GbR",
-        url: `${SITE_ORIGIN}/`,
-        logo: SITE_LOGO,
-        image: SITE_LOGO,
-        telephone: "+4917670800798",
-        email: "info@dpp-services.de",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "Am Kronberger Hang 2",
-          postalCode: "65824",
-          addressLocality: "Schwalbach am Taunus",
-          addressCountry: "DE",
-        },
-        areaServed: t.areaServed,
-        vatID: "DE460265715",
-      },
+      professionalServiceSchema(t.metaDescription),
       {
         "@type": "AboutPage",
         name: t.metaTitle,
         description: t.metaDescription,
         url: `${SITE_ORIGIN}/ueber-uns`,
-        mainEntity: { "@id": `${SITE_ORIGIN}/#business` },
+        mainEntity: { "@id": BUSINESS_ID },
       },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: t.breadcrumbHome, item: `${SITE_ORIGIN}/` },
-          { "@type": "ListItem", position: 2, name: t.breadcrumbPage, item: `${SITE_ORIGIN}/ueber-uns` },
-        ],
-      },
+      breadcrumbList([
+        { name: t.breadcrumbHome, path: "/" },
+        { name: t.breadcrumbPage, path: "/ueber-uns" },
+      ]),
     ],
   };
 
@@ -219,12 +198,14 @@ export function UeberUnsPage() {
                   {t.einsatzgebietTitle}
                 </h3>
                 <ul className="mt-6 flex flex-wrap gap-2.5">
-                  {t.regions.map((r) => (
-                    <li
-                      key={r}
-                      className="rounded-full border border-border bg-secondary/60 px-4 py-2 text-sm font-semibold text-ink-soft"
-                    >
-                      {r}
+                  {t.regions.map((region) => (
+                    <li key={region.href}>
+                      <Link
+                        to={region.href}
+                        className="inline-flex rounded-full border border-border bg-secondary/60 px-4 py-2 text-sm font-semibold text-ink-soft transition-colors hover:text-primary"
+                      >
+                        {region.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>

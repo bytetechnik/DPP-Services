@@ -9,7 +9,7 @@ import { LOGO_INTRO_EVENT, NAV_LOGO_ID, isLogoIntroRunning, type LogoIntroPhase 
 
 const MotionLink = motion.create(Link);
 
-const hrefs = ["/", "/leistungen", "/ueber-uns", "/karriere", "/#faq"];
+const hrefs = ["/", "/leistungen", "/einsatzgebiet", "/ueber-uns", "/karriere", "/#faq"];
 
 
 const copy = {
@@ -17,7 +17,7 @@ const copy = {
     tagline: "Empfang & Hotelservices",
     logoAlt: "DPP Services Logo",
     callAria: "DPP Services anrufen",
-    nav: ["Startseite", "Leistungen", "Über uns", "Karriere", "FAQ"],
+    nav: ["Startseite", "Leistungen", "Einsatzgebiet", "Über uns", "Karriere", "FAQ"],
     contact: "Kontakt",
     contactLong: "Kontakt",
     menuOpen: "Menü öffnen",
@@ -27,7 +27,7 @@ const copy = {
     tagline: "Reception & Hotel Services",
     logoAlt: "DPP Services logo",
     callAria: "Call DPP Services",
-    nav: ["Home", "Services", "About us", "Careers", "FAQ"],
+    nav: ["Home", "Services", "Service area", "About us", "Careers", "FAQ"],
     contact: "Contact",
     contactLong: "Contact us",
     menuOpen: "Open menu",
@@ -168,7 +168,7 @@ export function SiteHeader() {
           animate={{ opacity: navChromeHidden ? 0 : 1, y: navChromeHidden ? -6 : 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: navChromeHidden ? 0 : 0.18 }}
           className={cn(
-            "ml-auto hidden items-center gap-8 lg:flex",
+            "ml-auto hidden items-center gap-4 xl:gap-6 lg:flex",
             navChromeHidden && "pointer-events-none",
           )}
         >
@@ -182,7 +182,7 @@ export function SiteHeader() {
                 onClick={l.href === "/" ? onHomeClick : undefined}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "underline-sweep relative text-sm font-semibold transition-colors",
+                  "underline-sweep relative text-[13px] font-semibold transition-colors xl:text-sm",
                   active
                     ? scrolled
                       ? "text-gold-deep"

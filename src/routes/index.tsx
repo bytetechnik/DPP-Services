@@ -1,50 +1,33 @@
+import { AreaLinks } from "@/components/site/area-links";
 import { SiteHeader } from "@/components/site/header";
 import { Hero } from "@/components/site/hero";
 import { Process } from "@/components/site/process";
-import { Insights } from "@/components/site/insights";
-import { Faq } from "@/components/site/faq";
+import { Faq, faqCopy } from "@/components/site/faq";
 import { SiteFooter } from "@/components/site/footer";
 import { LogoIntro } from "@/components/site/logo-intro";
 import { useCopy } from "@/lib/i18n";
 import { PageMeta } from "@/lib/page-meta";
-import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
+import { faqPageSchema, professionalServiceSchema } from "@/lib/site";
 
 const copy = {
   de: {
-    metaTitle: "DPP Services | Empfangsdienst & Hotelpersonal Rhein-Main",
+    metaTitle: "Empfangsdienst Frankfurt | Hotelpersonal Rhein-Main | DPP Services",
     metaDescription:
-      "DPP Services vermittelt professionelles Empfangs- und Hotelpersonal im Rhein-Main-Gebiet: Rezeption, Night Audit, Tagungsservice und Büro-Empfang – kurzfristig verfügbar.",
-    areaServed: "Rhein-Main-Gebiet",
+      "DPP Services stellt Empfangsdienst und Hotelpersonal in Frankfurt und dem Rhein-Main-Gebiet: Rezeption, Night Audit, Tagung, Seminar Support und Büro-Empfang.",
   },
   en: {
-    metaTitle: "DPP Services | Reception & Hotel Staff Rhein-Main",
+    metaTitle: "Reception staff Frankfurt | Hotel staff Rhein-Main | DPP Services",
     metaDescription:
-      "DPP Services provides professional reception and hotel staff in the Rhein-Main region: front desk, night audit, conference service and office reception – available at short notice.",
-    areaServed: "Rhein-Main region",
+      "DPP Services provides reception and hotel staff in Frankfurt and the Rhein-Main region: front desk, night audit, conferences, seminar support and office reception.",
   },
 } as const;
 
 export function IndexPage() {
   const t = useCopy(copy);
+  const faqs = useCopy(faqCopy).faqs;
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "DPP Services GbR",
-    description: t.metaDescription,
-    url: `${SITE_ORIGIN}/`,
-    logo: SITE_LOGO,
-    image: SITE_LOGO,
-    telephone: "+4917670800798",
-    email: "info@dpp-services.de",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Am Kronberger Hang 2",
-      postalCode: "65824",
-      addressLocality: "Schwalbach am Taunus",
-      addressCountry: "DE",
-    },
-    areaServed: t.areaServed,
-    vatID: "DE460265715",
+    "@graph": [professionalServiceSchema(t.metaDescription), faqPageSchema(faqs)],
   };
 
   return (
@@ -55,7 +38,7 @@ export function IndexPage() {
       <main>
         <Hero />
         <Process />
-        <Insights />
+        <AreaLinks />
         <Faq />
       </main>
       <SiteFooter />

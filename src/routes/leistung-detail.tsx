@@ -13,7 +13,7 @@ import {
   servicesCopy,
   type ServiceSlug,
 } from "@/lib/services-data";
-import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
+import { SITE_ORIGIN, areaServedSchema, breadcrumbList, BUSINESS_ID, professionalServiceSchema } from "@/lib/site";
 
 const pageCopy = {
   de: {
@@ -27,7 +27,7 @@ const pageCopy = {
     bannerEyebrow: "Kurzfristig Personal benötigt?",
     bannerHeading: "Wir besetzen Schichten oft innerhalb von 24 Stunden.",
     bannerCta: "Schicht anfragen",
-    areaServed: "Rhein-Main-Gebiet",
+    areaLink: "Alle Einsatzorte in Frankfurt und dem Rhein-Main-Gebiet",
     backToServices: "Alle Leistungen",
   },
   en: {
@@ -41,7 +41,7 @@ const pageCopy = {
     bannerEyebrow: "Need staff at short notice?",
     bannerHeading: "We often fill shifts within 24 hours.",
     bannerCta: "Request a shift",
-    areaServed: "Rhein-Main region",
+    areaLink: "All locations in Frankfurt and the Rhein-Main region",
     backToServices: "All services",
   },
 } as const;
@@ -65,44 +65,29 @@ export function LeistungDetailPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
+      professionalServiceSchema(service.seoDescription),
       {
         "@type": "Service",
         name: service.title,
-        description: service.detailLead,
+        description: service.seoDescription,
         serviceType: service.title,
-        provider: {
-          "@type": "LocalBusiness",
-          "@id": `${SITE_ORIGIN}/#business`,
-          name: "DPP Services GbR",
-          url: `${SITE_ORIGIN}/`,
-          logo: SITE_LOGO,
-          email: "info@dpp-services.de",
-          telephone: "+4917670800798",
-        },
-        areaServed: t.areaServed,
+        provider: { "@id": BUSINESS_ID },
+        areaServed: areaServedSchema(),
         url: `${SITE_ORIGIN}${path}`,
       },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: t.breadcrumbHome, item: `${SITE_ORIGIN}/` },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: t.breadcrumbServices,
-            item: `${SITE_ORIGIN}/leistungen`,
-          },
-          { "@type": "ListItem", position: 3, name: service.title, item: `${SITE_ORIGIN}${path}` },
-        ],
-      },
+      breadcrumbList([
+        { name: t.breadcrumbHome, path: "/" },
+        { name: t.breadcrumbServices, path: "/leistungen" },
+        { name: service.title, path },
+      ]),
     ],
   };
 
   return (
     <div id="top" className="min-h-screen bg-background">
       <PageMeta
-        title={`${service.title} | DPP Services`}
-        description={service.detailLead}
+        title={service.seoTitle}
+        description={service.seoDescription}
         path={path}
         jsonLd={jsonLd}
       />
@@ -170,6 +155,12 @@ export function LeistungDetailPage() {
                   <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
                     {service.idealText}
                   </p>
+                  <Link
+                    to="/einsatzgebiet"
+                    className="mt-6 inline-flex text-sm font-bold text-primary-deep hover:underline"
+                  >
+                    {t.areaLink}
+                  </Link>
                 </div>
               </Reveal>
 

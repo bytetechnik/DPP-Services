@@ -2,6 +2,7 @@ import { motion, type Variants } from "motion/react";
 import type { ReactNode } from "react";
 
 import { useLang } from "@/lib/i18n";
+import { isPrerenderDocument } from "@/lib/site";
 
 const easing = [0.16, 1, 0.3, 1] as const;
 
@@ -20,12 +21,15 @@ export function Reveal({
   className?: string;
 }) {
   const { lang } = useLang();
+  const prerender = isPrerenderDocument();
+  const motionProps = prerender
+    ? { initial: false as const, animate: "show" as const }
+    : { initial: "hidden" as const, whileInView: "show" as const };
   return (
     <motion.div
       key={lang}
       className={className}
-      initial="hidden"
-      whileInView="show"
+      {...motionProps}
       viewport={{ once: true, margin: "-80px" }}
       variants={variants}
       transition={{ duration: 0.7, delay, ease: easing }}
@@ -45,12 +49,15 @@ export function RevealGroup({
   stagger?: number;
 }) {
   const { lang } = useLang();
+  const prerender = isPrerenderDocument();
+  const motionProps = prerender
+    ? { initial: false as const, animate: "show" as const }
+    : { initial: "hidden" as const, whileInView: "show" as const };
   return (
     <motion.div
       key={lang}
       className={className}
-      initial="hidden"
-      whileInView="show"
+      {...motionProps}
       viewport={{ once: true, margin: "-60px" }}
       variants={{ hidden: {}, show: { transition: { staggerChildren: stagger } } }}
     >

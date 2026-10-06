@@ -5,6 +5,8 @@ import { WhatsAppFloat } from "@/components/site/whatsapp-float";
 import { LanguageProvider, resolveInitialLang } from "@/lib/i18n";
 import { ScrollManager } from "@/lib/scroll-manager";
 import { DatenschutzPage } from "@/routes/datenschutz";
+import { EinsatzgebietDetailPage } from "@/routes/einsatzgebiet-detail";
+import { EinsatzgebietPage } from "@/routes/einsatzgebiet";
 import { ImpressumPage } from "@/routes/impressum";
 import { IndexPage } from "@/routes/index";
 import { KarrierePage } from "@/routes/karriere";
@@ -23,6 +25,8 @@ export function App() {
         <Route path="/" element={<IndexPage />} />
         <Route path="/leistungen" element={<LeistungenPage />} />
         <Route path="/leistungen/:slug" element={<LeistungDetailPage />} />
+        <Route path="/einsatzgebiet" element={<EinsatzgebietPage />} />
+        <Route path="/einsatzgebiet/:slug" element={<EinsatzgebietDetailPage />} />
         <Route path="/ueber-uns" element={<UeberUnsPage />} />
         <Route path="/karriere" element={<KarrierePage />} />
         <Route path="/karriere/:slug" element={<KarriereDetailPage />} />

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { Reveal } from "./reveal";
 import { useCopy } from "@/lib/i18n";
 
-const copy = {
+export const faqCopy = {
   de: {
     eyebrow: "Häufige Fragen",
     title: "Antworten, bevor Sie fragen",
@@ -18,7 +18,7 @@ const copy = {
     faqs: [
       {
         q: "In welchem Gebiet sind Sie tätig?",
-        a: "Unser Schwerpunkt liegt im Rhein-Main-Gebiet – unter anderem Frankfurt, Offenbach, Wiesbaden, Mainz und Darmstadt. Auf Anfrage prüfen wir auch Einsätze in angrenzenden Regionen.",
+        a: "Unser Schwerpunkt ist Frankfurt am Main, dazu der Flughafen Frankfurt, Offenbach, der Taunus mit Schwalbach, Eschborn, Kronberg, Bad Soden, Königstein, Oberursel, Bad Homburg, Hofheim und Kelkheim, sowie Wiesbaden, Mainz, Darmstadt, Neu-Isenburg, Dreieich, Langen und Hanau. Auf Anfrage prüfen wir Einsätze in angrenzenden Orten.",
       },
       {
         q: "Wie schnell können Sie eine Schicht besetzen?",
@@ -51,7 +51,7 @@ const copy = {
     faqs: [
       {
         q: "Which areas do you serve?",
-        a: "Our focus is the Rhein-Main region – including Frankfurt, Offenbach, Wiesbaden, Mainz and Darmstadt. On request, we're happy to review assignments in neighboring regions too.",
+        a: "Our focus is Frankfurt am Main, plus Frankfurt Airport, Offenbach, the Taunus including Schwalbach, Eschborn, Kronberg, Bad Soden, Königstein, Oberursel, Bad Homburg, Hofheim and Kelkheim, as well as Wiesbaden, Mainz, Darmstadt, Neu-Isenburg, Dreieich, Langen and Hanau. On request we review assignments in neighbouring towns.",
       },
       {
         q: "How quickly can you fill a shift?",
@@ -78,7 +78,7 @@ const copy = {
 };
 
 export function Faq() {
-  const t = useCopy(copy);
+  const t = useCopy(faqCopy);
   return (
     <section id="faq" className="bg-secondary/60 py-20 sm:py-28">
       <div className="mx-auto grid w-full max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:px-8">

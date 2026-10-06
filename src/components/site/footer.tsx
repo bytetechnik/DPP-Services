@@ -2,16 +2,18 @@ import { Mail, MapPin, Clock3, ArrowUp, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { OPEN_PRIVACY_SETTINGS_EVENT } from "@/components/site/cookie-banner";
 import { useCopy } from "@/lib/i18n";
+import { BUSINESS, MAPS_URL } from "@/lib/site";
 
 
 const copy = {
   de: {
     tagline: "Empfang & Hotelservices",
     description:
-      "Professionelles Empfangs- und Hotelpersonal für das Rhein-Main-Gebiet – zuverlässig, diskret und kurzfristig verfügbar.",
+      "Professionelles Empfangs- und Hotelpersonal für Frankfurt und das Rhein-Main-Gebiet – zuverlässig, diskret und kurzfristig verfügbar.",
     navHeading: "Navigation",
     nav: [
       { label: "Leistungen", href: "/leistungen" },
+      { label: "Einsatzgebiet", href: "/einsatzgebiet" },
       { label: "Über uns", href: "/ueber-uns" },
       { label: "Karriere", href: "/karriere" },
       { label: "FAQ", href: "/#faq" },
@@ -22,10 +24,12 @@ const copy = {
       { label: "Empfangsdienst", href: "/leistungen/empfang" },
       { label: "Night Audit", href: "/leistungen/night-audit" },
       { label: "Tagungsservice", href: "/leistungen/tagung" },
+      { label: "Seminar Support", href: "/leistungen/seminar-support" },
       { label: "Büro-Empfang", href: "/leistungen/buero-empfang" },
     ],
     kontaktHeading: "Kontakt",
-    region: "Rhein-Main-Gebiet",
+    region: "Frankfurt & Rhein-Main",
+    route: "Route planen",
     hours: "Einsätze 24/7",
     cta: "Anfrage senden",
     rights: "Alle Rechte vorbehalten.",
@@ -41,10 +45,11 @@ const copy = {
   en: {
     tagline: "Reception & Hotel Services",
     description:
-      "Professional reception and hotel staff for the Rhein-Main region – reliable, discreet, and available at short notice.",
+      "Professional reception and hotel staff for Frankfurt and the Rhein-Main region – reliable, discreet, and available at short notice.",
     navHeading: "Navigation",
     nav: [
       { label: "Services", href: "/leistungen" },
+      { label: "Service area", href: "/einsatzgebiet" },
       { label: "About us", href: "/ueber-uns" },
       { label: "Careers", href: "/karriere" },
       { label: "FAQ", href: "/#faq" },
@@ -55,10 +60,12 @@ const copy = {
       { label: "Reception service", href: "/leistungen/empfang" },
       { label: "Night audit", href: "/leistungen/night-audit" },
       { label: "Conference service", href: "/leistungen/tagung" },
+      { label: "Seminar Support", href: "/leistungen/seminar-support" },
       { label: "Office reception", href: "/leistungen/buero-empfang" },
     ],
     kontaktHeading: "Contact",
-    region: "Rhein-Main region",
+    region: "Frankfurt & Rhein-Main",
+    route: "Plan a route",
     hours: "24/7 availability",
     cta: "Send inquiry",
     rights: "All rights reserved.",
@@ -153,22 +160,39 @@ export function SiteFooter() {
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                 <a
-                  href="mailto:info@dpp-services.de"
+                  href={`mailto:${BUSINESS.email}`}
                   aria-label={t.mailAria}
                   className="break-words hover:text-white"
                 >
-                  info@dpp-services.de
+                  {BUSINESS.email}
                 </a>
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                <a href="tel:+4917670800798" aria-label={t.callAria} className="hover:text-white">
-                  +49 176 70800798
+                <a href={`tel:${BUSINESS.telephone}`} aria-label={t.callAria} className="hover:text-white">
+                  {BUSINESS.telephoneDisplay}
                 </a>
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                {t.region}
+                <span>
+                  {BUSINESS.streetAddress}
+                  <br />
+                  {BUSINESS.postalCode} {BUSINESS.addressLocality}
+                  <br />
+                  <Link to="/einsatzgebiet" className="hover:text-white">
+                    {t.region}
+                  </Link>
+                  {" · "}
+                  <a
+                    href={MAPS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white"
+                  >
+                    {t.route}
+                  </a>
+                </span>
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <Clock3 className="mt-0.5 h-4 w-4 shrink-0 text-gold" />

@@ -7,7 +7,7 @@ import { serviceMeta, servicesCopy } from "@/lib/services-data";
 const copy = {
   de: {
     eyebrow: "Unsere Dienstleistungen",
-    heading: "Vier Servicebereiche, ein Qualitätsversprechen",
+    heading: "Fünf Servicebereiche, ein Qualitätsversprechen",
     intro:
       "Ob dauerhafte Besetzung, Urlaubsvertretung oder kurzfristiger Ausfall – wir liefern geschultes Personal mit Hotel-DNA und klaren Standards.",
     learnMore: "Mehr erfahren",
@@ -18,7 +18,7 @@ const copy = {
   },
   en: {
     eyebrow: "Our Services",
-    heading: "Four service areas, one promise of quality",
+    heading: "Five service areas, one promise of quality",
     intro:
       "Whether it's permanent staffing, holiday cover or a short-notice gap – we provide trained personnel with genuine hotel DNA and clear standards.",
     learnMore: "Learn more",

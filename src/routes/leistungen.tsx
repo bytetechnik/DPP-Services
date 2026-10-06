@@ -2,26 +2,26 @@ import { CalendarClock, CheckCircle2, ShieldCheck, Sparkles } from "lucide-react
 import { Link } from "react-router-dom";
 import { SiteHeader } from "@/components/site/header";
 import { Services } from "@/components/site/services";
+import { AreaLinks } from "@/components/site/area-links";
 import { SiteFooter } from "@/components/site/footer";
 import { Reveal, RevealGroup, RevealItem } from "@/components/site/reveal";
 import { useCopy } from "@/lib/i18n";
 import { PageMeta } from "@/lib/page-meta";
-import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
+import { breadcrumbList, BUSINESS_ID, areaServedSchema, professionalServiceSchema, SITE_ORIGIN } from "@/lib/site";
 
 const copy = {
   de: {
-    metaTitle: "Leistungen | Empfangsdienst, Night Audit & Hotelservice",
+    metaTitle: "Leistungen Frankfurt | Rezeption, Night Audit, Tagung, Seminar, Büro | DPP Services",
     metaDescription:
-      "Alle Leistungen von DPP Services im Detail: Empfangsdienst und Hotelrezeption, Night Audit, Tagungs- und Bankettservice sowie Büro-Empfang im Rhein-Main-Gebiet.",
-    areaServed: "Rhein-Main-Gebiet",
+      "Empfangsdienst, Hotelrezeption, Night Audit, Tagungsservice, Seminar Support und Büro-Empfang in Frankfurt und dem Rhein-Main-Gebiet.",
     serviceName: "Empfangs- und Hotelservices",
-    serviceType: "Empfangsdienst, Hotelrezeption, Night Audit, Tagungsservice, Büro-Empfang",
+    serviceType: "Empfangsdienst, Hotelrezeption, Night Audit, Tagungsservice, Seminar Support, Büro-Empfang",
     breadcrumbHome: "Startseite",
     breadcrumbPage: "Leistungen",
     eyebrowHero: "Leistungen",
     heroTitle: "Empfangs- und Hotelservices, die Ihr Haus tragen",
     heroText:
-      "Von der klassischen Rezeption über den Nachtdienst bis zum Bankettservice: Wir stellen geschultes Personal mit Hotel-DNA – dauerhaft, als Vertretung oder kurzfristig innerhalb von 24 Stunden.",
+      "Von der klassischen Rezeption über den Nachtdienst bis zum Bankett: Wir stellen geschultes Personal für Frankfurt und das Rhein-Main-Gebiet – dauerhaft, als Vertretung oder kurzfristig innerhalb von 24 Stunden.",
     heroCta: "Personal anfragen",
     eyebrowModels: "Einsatzmodelle",
     modelsTitle: "Drei Wege, wie wir zusammenarbeiten",
@@ -56,12 +56,11 @@ const copy = {
     includedCta: "Angebot erhalten",
   },
   en: {
-    metaTitle: "Services | Reception, Night Audit & Hotel Service",
+    metaTitle: "Services in Frankfurt | Reception, night audit, conferences | DPP Services",
     metaDescription:
-      "All DPP Services offerings in detail: reception and hotel front desk, night audit, conference and banquet service, and office reception in the Rhein-Main region.",
-    areaServed: "Rhein-Main region",
+      "Reception, hotel front desk, night audit, conference service, seminar support and office reception in Frankfurt and the Rhein-Main region.",
     serviceName: "Reception and hotel services",
-    serviceType: "Reception, hotel front desk, night audit, conference service, office reception",
+    serviceType: "Reception, hotel front desk, night audit, conference service, seminar support, office reception",
     breadcrumbHome: "Home",
     breadcrumbPage: "Services",
     eyebrowHero: "Services",
@@ -108,40 +107,20 @@ export function LeistungenPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "LocalBusiness",
-        "@id": `${SITE_ORIGIN}/#business`,
-        name: "DPP Services GbR",
-        url: `${SITE_ORIGIN}/`,
-        logo: SITE_LOGO,
-        image: SITE_LOGO,
-        telephone: "+4917670800798",
-        email: "info@dpp-services.de",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "Am Kronberger Hang 2",
-          postalCode: "65824",
-          addressLocality: "Schwalbach am Taunus",
-          addressCountry: "DE",
-        },
-        areaServed: t.areaServed,
-        vatID: "DE460265715",
-      },
+      professionalServiceSchema(t.metaDescription),
       {
         "@type": "Service",
         name: t.serviceName,
         description: t.metaDescription,
         serviceType: t.serviceType,
-        provider: { "@id": `${SITE_ORIGIN}/#business` },
-        areaServed: t.areaServed,
+        provider: { "@id": BUSINESS_ID },
+        areaServed: areaServedSchema(),
+        url: `${SITE_ORIGIN}/leistungen`,
       },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: t.breadcrumbHome, item: `${SITE_ORIGIN}/` },
-          { "@type": "ListItem", position: 2, name: t.breadcrumbPage, item: `${SITE_ORIGIN}/leistungen` },
-        ],
-      },
+      breadcrumbList([
+        { name: t.breadcrumbHome, path: "/" },
+        { name: t.breadcrumbPage, path: "/leistungen" },
+      ]),
     ],
   };
 
@@ -173,6 +152,8 @@ export function LeistungenPage() {
         </section>
 
         <Services />
+
+        <AreaLinks />
 
         <section className="bg-secondary/60 py-20 sm:py-28">
           <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">

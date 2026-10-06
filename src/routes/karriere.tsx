@@ -6,14 +6,18 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/site/reveal";
 import { useCopy } from "@/lib/i18n";
 import { jobsCopy } from "@/lib/jobs-data";
 import { PageMeta } from "@/lib/page-meta";
-import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
+import {
+  breadcrumbList,
+  postalAddressSchema,
+  professionalServiceSchema,
+  SITE_ORIGIN,
+} from "@/lib/site";
 
 const copy = {
   de: {
     metaTitle: "Karriere | Stellenangebote bei DPP Services",
     metaDescription:
-      "Werden Sie Teil von DPP Services: Offene Stellen für Empfangskräfte und Night Auditoren im Rhein-Main-Gebiet. Bewerbung an info@dpp-services.de.",
-    areaServed: "Rhein-Main-Gebiet",
+      "Offene Stellen für Empfangskräfte und Night Auditoren in Frankfurt und dem Rhein-Main-Gebiet. Bewerbung an info@dpp-services.de.",
     breadcrumbHome: "Startseite",
     breadcrumbPage: "Karriere",
     eyebrowHero: "Karriere",
@@ -29,8 +33,7 @@ const copy = {
   en: {
     metaTitle: "Careers | Job openings at DPP Services",
     metaDescription:
-      "Join DPP Services: open roles for front desk staff and night auditors in the Rhein-Main region. Apply to info@dpp-services.de.",
-    areaServed: "Rhein-Main region",
+      "Open roles for front desk staff and night auditors in Frankfurt and the Rhein-Main region. Apply to info@dpp-services.de.",
     breadcrumbHome: "Home",
     breadcrumbPage: "Careers",
     eyebrowHero: "Careers",
@@ -52,23 +55,11 @@ export function KarrierePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "LocalBusiness",
-        "@id": `${SITE_ORIGIN}/#business`,
-        name: "DPP Services GbR",
-        url: `${SITE_ORIGIN}/`,
-        logo: SITE_LOGO,
-        email: "info@dpp-services.de",
-        telephone: "+4917670800798",
-        areaServed: t.areaServed,
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: t.breadcrumbHome, item: `${SITE_ORIGIN}/` },
-          { "@type": "ListItem", position: 2, name: t.breadcrumbPage, item: `${SITE_ORIGIN}/karriere` },
-        ],
-      },
+      professionalServiceSchema(t.metaDescription),
+      breadcrumbList([
+        { name: t.breadcrumbHome, path: "/" },
+        { name: t.breadcrumbPage, path: "/karriere" },
+      ]),
       ...jobsData.jobs.map((job) => ({
         "@type": "JobPosting",
         title: job.title,
@@ -81,12 +72,7 @@ export function KarrierePage() {
         },
         jobLocation: {
           "@type": "Place",
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: "Schwalbach am Taunus",
-            addressRegion: "Hessen",
-            addressCountry: "DE",
-          },
+          address: postalAddressSchema(),
         },
         applicantLocationRequirements: {
           "@type": "Country",

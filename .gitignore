@@ -16,6 +16,10 @@ dist-ssr
 .nitro
 *.local
 
+# SMTP secrets (never commit)
+smtp-config.php
+public/smtp-config.php
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

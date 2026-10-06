@@ -7,7 +7,13 @@ import { NotFoundPage } from "@/routes/not-found";
 import { useCopy } from "@/lib/i18n";
 import { isJobSlug, jobsCopy, type JobSlug } from "@/lib/jobs-data";
 import { PageMeta } from "@/lib/page-meta";
-import { SITE_LOGO, SITE_ORIGIN } from "@/lib/site";
+import {
+  breadcrumbList,
+  postalAddressSchema,
+  professionalServiceSchema,
+  SITE_LOGO,
+  SITE_ORIGIN,
+} from "@/lib/site";
 
 const pageCopy = {
   de: {
@@ -58,6 +64,7 @@ export function KarriereDetailPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
+      professionalServiceSchema(job.summary),
       {
         "@type": "JobPosting",
         title: job.title,
@@ -70,12 +77,7 @@ export function KarriereDetailPage() {
         },
         jobLocation: {
           "@type": "Place",
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: "Schwalbach am Taunus",
-            addressRegion: "Hessen",
-            addressCountry: "DE",
-          },
+          address: postalAddressSchema(),
         },
         applicantLocationRequirements: {
           "@type": "Country",
@@ -83,19 +85,11 @@ export function KarriereDetailPage() {
         },
         url: `${SITE_ORIGIN}${path}`,
       },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: t.breadcrumbHome, item: `${SITE_ORIGIN}/` },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: t.breadcrumbCareers,
-            item: `${SITE_ORIGIN}/karriere`,
-          },
-          { "@type": "ListItem", position: 3, name: job.title, item: `${SITE_ORIGIN}${path}` },
-        ],
-      },
+      breadcrumbList([
+        { name: t.breadcrumbHome, path: "/" },
+        { name: t.breadcrumbCareers, path: "/karriere" },
+        { name: job.title, path },
+      ]),
     ],
   };
 

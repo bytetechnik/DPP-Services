@@ -53,6 +53,8 @@ export function PageMeta({
       document.head.appendChild(script);
     }
 
+    document.documentElement.dataset["pageReady"] = "true";
+
     return () => {
       document.getElementById("page-jsonld")?.remove();
     };

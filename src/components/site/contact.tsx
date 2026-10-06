@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { motion } from "motion/react";
 import { Mail, MapPin, Phone, Send, Clock3 } from "lucide-react";
 import { Reveal } from "./reveal";
 
 import { useCopy } from "@/lib/i18n";
+import { BUSINESS, MAPS_URL } from "@/lib/site";
 
 const contactIcons = [Mail, Phone, MapPin, Clock3];
 
@@ -14,9 +15,14 @@ const copy = {
     intro:
       "Erzählen Sie uns kurz von Ihrem Bedarf – Standort, Schichten und Zeitraum genügen für den Start. Wir melden uns mit einem konkreten Vorschlag zurück.",
     contactItems: [
-      { label: "E-Mail", value: "info@dpp-services.de", href: "mailto:info@dpp-services.de" as string | undefined },
-      { label: "Telefon", value: "+49 176 70800798", href: "tel:+4917670800798" as string | undefined },
-      { label: "Einsatzgebiet", value: "Rhein-Main-Gebiet", href: undefined as string | undefined },
+      { label: "E-Mail", value: BUSINESS.email, href: `mailto:${BUSINESS.email}` as string | undefined },
+      { label: "Telefon", value: BUSINESS.telephoneDisplay, href: `tel:${BUSINESS.telephone}` as string | undefined },
+      {
+        label: "Adresse",
+        value: `${BUSINESS.streetAddress}, ${BUSINESS.postalCode} ${BUSINESS.addressLocality}`,
+        href: MAPS_URL,
+        routeLabel: "Route planen",
+      },
       { label: "Erreichbarkeit", value: "Mo–So, Einsätze 24/7", href: undefined as string | undefined },
     ],
     fields: {
@@ -41,6 +47,8 @@ const copy = {
     submit: "Einreichen",
     disclaimer: "Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage genutzt.",
     sentSuccess: "Nachricht gesendet",
+    sendError:
+      "Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie an info@dpp-services.de.",
   },
   en: {
     eyebrow: "Contact",
@@ -48,9 +56,14 @@ const copy = {
     intro:
       "Tell us briefly about your needs – location, shifts and timeframe are enough to get started. We'll get back to you with a concrete proposal.",
     contactItems: [
-      { label: "Email", value: "info@dpp-services.de", href: "mailto:info@dpp-services.de" as string | undefined },
-      { label: "Phone", value: "+49 176 70800798", href: "tel:+4917670800798" as string | undefined },
-      { label: "Service area", value: "Rhein-Main region", href: undefined as string | undefined },
+      { label: "Email", value: BUSINESS.email, href: `mailto:${BUSINESS.email}` as string | undefined },
+      { label: "Phone", value: BUSINESS.telephoneDisplay, href: `tel:${BUSINESS.telephone}` as string | undefined },
+      {
+        label: "Address",
+        value: `${BUSINESS.streetAddress}, ${BUSINESS.postalCode} ${BUSINESS.addressLocality}`,
+        href: MAPS_URL,
+        routeLabel: "Plan a route",
+      },
       { label: "Availability", value: "Mon–Sun, deployments 24/7", href: undefined as string | undefined },
     ],
     fields: {
@@ -75,14 +88,52 @@ const copy = {
     submit: "Submit",
     disclaimer: "Your information will only be used to process your inquiry.",
     sentSuccess: "Message sent",
+    sendError:
+      "Message could not be sent. Please try again or email info@dpp-services.de.",
   },
 };
 
 export function Contact() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const t = useCopy(copy);
   const contactItems = t.contactItems.map((c, i) => ({ ...c, icon: contactIcons[i]! }));
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    setSending(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("/mail.php", {
+        method: "POST",
+        body: formData,
+      });
+
+      let payload: { ok?: boolean; error?: string } | null = null;
+      try {
+        payload = (await response.json()) as { ok?: boolean; error?: string };
+      } catch {
+        payload = null;
+      }
+
+      if (!response.ok || !payload?.ok) {
+        setError(t.sendError);
+        return;
+      }
+
+      setSent(true);
+      form.reset();
+    } catch {
+      setError(t.sendError);
+    } finally {
+      setSending(false);
+    }
+  }
 
   return (
     <section id="kontakt" className="relative overflow-hidden bg-ink pt-28 pb-20 sm:pt-36 sm:pb-28">
@@ -103,14 +154,14 @@ export function Contact() {
       <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <Reveal>
           <span className="eyebrow text-gold">{t.eyebrow}</span>
-          <motion.h2
+          <motion.h1
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
             className="mt-4 font-display text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl"
           >
             {t.heading}
-          </motion.h2>
+          </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -136,7 +187,19 @@ export function Contact() {
                   <p className="text-[11px] font-bold tracking-[0.18em] text-white/50 uppercase">
                     {c.label}
                   </p>
-                  {c.href ? (
+                  {c.routeLabel ? (
+                    <>
+                      <p className="font-display text-base font-semibold text-white">{c.value}</p>
+                      <a
+                        href={c.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1 inline-flex text-sm font-semibold text-gold hover:text-white"
+                      >
+                        {c.routeLabel}
+                      </a>
+                    </>
+                  ) : c.href ? (
                     <a
                       href={c.href}
                       className="font-display text-base font-semibold break-words text-white transition-colors duration-300 hover:text-gold"
@@ -160,16 +223,17 @@ export function Contact() {
             </div>
           ) : (
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSending(true);
-              window.setTimeout(() => {
-                setSending(false);
-                setSent(true);
-              }, 700);
-            }}
+            onSubmit={handleSubmit}
             className="rounded-3xl border border-white/12 bg-white/5 p-6 backdrop-blur-xl sm:p-8"
           >
+            {/* Honeypot – leave empty; bots often fill it */}
+            <div className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true">
+              <label>
+                Website
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+              </label>
+            </div>
+
             <div className="grid gap-5 sm:grid-cols-2">
               <Field label={t.fields.firstName} name="firstName" placeholder={t.firstNamePlaceholder} required maxLength={100} />
               <Field label={t.fields.lastName} name="lastName" placeholder={t.lastNamePlaceholder} required maxLength={100} />
@@ -220,6 +284,11 @@ export function Contact() {
               />
             </label>
 
+            {error ? (
+              <p className="mt-5 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200" role="alert">
+                {error}
+              </p>
+            ) : null}
 
             <button
               type="submit"

@@ -1,0 +1,43 @@
+# DPP Services – Hostinger / Apache
+# Place this file in public_html (copied from public/ on Vite build).
+
+Options -Indexes
+ServerSignature Off
+
+# Block accidental exposure of local secret config if uploaded into public_html
+<FilesMatch "^(smtp-config\.php|\.env)$">
+  Require all denied
+</FilesMatch>
+
+# Security headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# SPA routing: serve existing files (incl. mail.php, assets), else index.html
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Keep HTTPS if already on HTTPS (Hostinger often also forces SSL in hPanel)
+  # RewriteCond %{HTTPS} !=on
+  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Do not rewrite real files (assets, mail.php, sitemap, llms.txt)
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # Prerendered routes: /leistungen/empfang -> /leistungen/empfang/index.html
+  # Internal rewrite keeps the URL without a trailing-slash redirect.
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^(.+?)/?$ $1/index.html [L]
+
+  # Real directories that are not prerendered pages
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Client-side routes → React app
+  RewriteRule ^ index.html [L]
+</IfModule>

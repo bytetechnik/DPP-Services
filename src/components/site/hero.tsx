@@ -3,6 +3,7 @@ import { ArrowRight, Clock, ShieldCheck, Sparkles, Star, type LucideIcon } from 
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-reception.jpg";
 import { useCopy } from "@/lib/i18n";
+import { isPrerenderDocument } from "@/lib/site";
 
 const easing = [0.16, 1, 0.3, 1] as const;
 
@@ -12,34 +13,34 @@ const copy = {
   de: {
     imageAlt: "Moderne Hotelrezeption mit Empfangsmitarbeiterin am Abend",
     eyebrow: "Empfang & Hotelservices",
-    titleLine1: "Der erste Eindruck",
-    titleLine2: "in besten Händen.",
+    seoTitle: "Empfangsdienst und Hotelpersonal in Frankfurt und dem Rhein-Main-Gebiet",
+    brandLine: "Der erste Eindruck in besten Händen.",
     paragraph:
-      "DPP Services übernimmt Rezeption, Night Audit, Büro-Empfang und Servicekräfte im Rhein-Main-Gebiet – geschult, diskret und zuverlässig. Sie konzentrieren sich auf Ihr Geschäft, wir auf Ihre Gäste.",
+      "DPP Services übernimmt Rezeption, Night Audit, Tagung, Seminar Support und Büro-Empfang in Frankfurt und dem Rhein-Main-Gebiet – geschult, diskret und zuverlässig.",
     ctaPrimary: "Unverbindlich anfragen",
     ctaSecondary: "Leistungen entdecken",
-    badges: ["24/7 Besetzung", "Diskret & geprüft", "Rhein-Main Region"],
+    badges: ["24/7 Besetzung", "Diskret & geprüft", "Frankfurt & Rhein-Main"],
     stats: [
       ["10+", "Jahre Branchenerfahrung"],
       ["24/7", "Einsatzbereitschaft"],
-      ["4", "Kern-Servicebereiche"],
+      ["5", "Kern-Servicebereiche"],
       ["100%", "geprüftes Personal"],
     ] as [string, string][],
   },
   en: {
     imageAlt: "Modern hotel reception with a receptionist in the evening",
     eyebrow: "Reception & Hotel Services",
-    titleLine1: "The first impression,",
-    titleLine2: "in the best hands.",
+    seoTitle: "Reception and hotel staff in Frankfurt and the Rhein-Main region",
+    brandLine: "The first impression, in the best hands.",
     paragraph:
-      "DPP Services provides reception, night audit, office front-desk, and service staff across the Rhein-Main region – trained, discreet, and reliable. You focus on your business, we focus on your guests.",
+      "DPP Services provides reception, night audit, conferences, seminar support and office front desks in Frankfurt and the Rhein-Main region – trained, discreet and reliable.",
     ctaPrimary: "Get in touch",
     ctaSecondary: "Discover our services",
-    badges: ["24/7 coverage", "Discreet & vetted", "Rhein-Main region"],
+    badges: ["24/7 coverage", "Discreet & vetted", "Frankfurt & Rhein-Main"],
     stats: [
       ["10+", "years of industry experience"],
       ["24/7", "availability"],
-      ["4", "core service areas"],
+      ["5", "core service areas"],
       ["100%", "vetted staff"],
     ] as [string, string][],
   },
@@ -47,6 +48,7 @@ const copy = {
 
 export function Hero() {
   const t = useCopy(copy);
+  const prerender = isPrerenderDocument();
   return (
     <section id="top" className="relative isolate overflow-hidden bg-ink">
       <img
@@ -64,7 +66,7 @@ export function Hero() {
 
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-32 pb-20 sm:px-6 sm:pt-40 sm:pb-28 lg:px-8 lg:pt-48 lg:pb-36">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={prerender ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: easing }}
           className="max-w-3xl"
@@ -74,11 +76,12 @@ export function Hero() {
             {t.eyebrow}
           </span>
 
-          <h1 className="mt-6 font-display text-4xl leading-[1.05] font-extrabold text-white sm:text-5xl lg:text-7xl">
-            {t.titleLine1}
-            <br />
-            <span className="text-gradient-brand">{t.titleLine2}</span>
+          <h1 className="mt-6 font-display text-3xl leading-[1.15] font-extrabold text-white sm:text-4xl lg:text-5xl">
+            {t.seoTitle}
           </h1>
+          <p className="mt-4 font-display text-2xl leading-tight font-extrabold text-gradient-brand sm:text-3xl lg:text-4xl">
+            {t.brandLine}
+          </p>
 
           <p className="mt-4 max-w-xl text-sm leading-snug text-white/75 sm:mt-6 sm:text-lg sm:leading-relaxed">
             {t.paragraph}
@@ -115,9 +118,9 @@ export function Hero() {
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        initial={prerender ? false : { opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.25, ease: easing }}
+        transition={{ duration: 0.8, delay: prerender ? 0 : 0.25, ease: easing }}
         className="relative mx-auto -mb-px w-full max-w-7xl px-4 sm:px-6 lg:px-8"
       >
         <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-t-3xl border border-white/15 border-b-0 bg-white/10 backdrop-blur-xl lg:grid-cols-4">
